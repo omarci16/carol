@@ -1030,6 +1030,14 @@ body {
 }
 
 @media (max-width: 768px) {
+  /* Always show background on mobile — no transparent nav */
+  .nav {
+    background: rgba(245, 240, 232, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--color-rule);
+  }
+
   .nav-links {
     position: fixed;
     inset: 0;
@@ -1040,11 +1048,11 @@ body {
     gap: var(--space-lg);
     transform: translateX(100%);
     transition: transform var(--duration-base) var(--ease-out);
-    z-index: 99;
+    z-index: 200;
   }
   .nav-links.open { transform: translateX(0); }
   .nav-links a { font-size: 1.125rem; letter-spacing: 0.08em; }
-  .nav-toggle { display: flex; }
+  .nav-toggle { display: flex; z-index: 210; }
 
   .hero { padding: calc(var(--nav-height) + 1.5rem) var(--space-sm) 2.5rem; }
 

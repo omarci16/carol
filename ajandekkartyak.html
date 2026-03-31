@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajándékkártya rendelés — Carol Gasztroműhely</title>
+  <meta name="description" content="Carol Gasztroműhely ajándékkártya rendelése. Adj ajándékba élményt!">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg:       #F5F0E8;
+      --color-text:     #1C1A17;
+      --color-accent:   #B8955A;
+      --color-bg-dark:  #1C1A17;
+      --color-text-dark:#F5F0E8;
+      --color-rule:     rgba(28, 26, 23, 0.12);
+      --color-error:    #a0402a;
+      --font-heading:   'Cormorant Garamond', Georgia, serif;
+      --font-body:      'Inter', system-ui, sans-serif;
+      --max-width:      1200px;
+      --nav-height:     72px;
+      --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      background: rgba(245, 240, 232, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-rule);
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .nav-logo img { height: 32px; width: auto; display: block; transition: opacity 150ms; }
+    .nav-logo:hover img { opacity: 0.8; }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.45);
+      transition: color 150ms;
+    }
+    .nav-back:hover { color: var(--color-accent); }
+    .nav-back svg { width: 14px; height: 14px; }
+
+    /* ── Page header ─────────────────────────────────────── */
+    .page-header {
+      padding: 5rem 2rem 4rem;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      border-bottom: 1px solid var(--color-rule);
+    }
+    .page-header-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .page-header-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--color-accent);
+    }
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.75rem, 6vw, 5rem);
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+    .page-header h1 em { font-style: italic; color: var(--color-accent); }
+    .page-header-sub {
+      margin-top: 1.5rem;
+      font-size: 0.8125rem;
+      letter-spacing: 0.06em;
+      color: rgba(28, 26, 23, 0.45);
+      line-height: 1.8;
+    }
+
+    /* ── Layout ──────────────────────────────────────────── */
+    .order-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 4rem;
+      align-items: start;
+      animation: fadeUp 0.7s var(--ease-out) 0.1s both;
+    }
+
+    /* ── Section headings ────────────────────────────────── */
+    .form-section-title {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .form-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-rule);
+    }
+
+    /* ── Gift card value picker ───────────────────────────── */
+    .card-picker {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 2.5rem;
+    }
+    .card-option {
+      position: relative;
+    }
+    .card-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .card-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 1.25rem 0.5rem;
+      border: 1px solid var(--color-rule);
+      cursor: pointer;
+      transition: border-color 200ms, background 200ms;
+      user-select: none;
+    }
+    .card-option label:hover {
+      border-color: rgba(184, 149, 90, 0.5);
+      background: rgba(184, 149, 90, 0.04);
+    }
+    .card-option input:checked + label {
+      border-color: var(--color-accent);
+      background: rgba(184, 149, 90, 0.07);
+    }
+    .card-price {
+      font-family: var(--font-heading);
+      font-size: 1.375rem;
+      font-weight: 400;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      transition: color 200ms;
+    }
+    .card-option input:checked + label .card-price { color: var(--color-accent); }
+    .card-currency {
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.35);
+      transition: color 200ms;
+    }
+    .card-option input:checked + label .card-currency { color: rgba(184, 149, 90, 0.7); }
+    /* Checkmark */
+    .card-check {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid var(--color-rule);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 200ms, border-color 200ms;
+      flex-shrink: 0;
+    }
+    .card-option input:checked + label .card-check {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+    .card-check::after {
+      content: '';
+      width: 5px;
+      height: 3px;
+      border-left: 1.5px solid #fff;
+      border-bottom: 1.5px solid #fff;
+      transform: translateY(-1px) rotate(-45deg);
+      opacity: 0;
+      transition: opacity 150ms;
+    }
+    .card-option input:checked + label .card-check::after { opacity: 1; }
+
+    /* ── Form fields ─────────────────────────────────────── */
+    .order-form-section h2 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      margin-bottom: 2rem;
+      line-height: 1.1;
+    }
+    .order-form-section h2 em { font-style: italic; }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.5);
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: transparent;
+      border: 1px solid var(--color-rule);
+      border-radius: 0;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      outline: none;
+      transition: border-color 200ms;
+      -webkit-appearance: none;
+    }
+    .form-group input::placeholder { color: rgba(28, 26, 23, 0.25); }
+    .form-group input:focus { border-color: var(--color-accent); }
+    .form-group input.error { border-color: var(--color-error); }
+
+    /* Two-column row for short paired fields */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 8px;
+      margin-bottom: 1.25rem;
+    }
+    .form-row .form-group { margin-bottom: 0; }
+
+    .form-hint {
+      font-size: 0.6875rem;
+      color: rgba(28, 26, 23, 0.35);
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+
+    .form-submit {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 1rem 2.75rem;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-bg);
+      background: var(--color-accent);
+      border: 1px solid var(--color-accent);
+      cursor: pointer;
+      transition: background 150ms, color 150ms, border-color 150ms;
+    }
+    .form-submit:hover {
+      background: transparent;
+      color: var(--color-text);
+      border-color: var(--color-text);
+    }
+
+    /* ── Thank you ───────────────────────────────────────── */
+    .order-thankyou { display: none; padding: 3rem 0; }
+    .order-thankyou.visible { display: block; }
+    .order-form-inner.hidden { display: none; }
+    .thankyou-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--color-accent);
+    }
+    .thankyou-icon svg { width: 20px; height: 20px; }
+    .order-thankyou h3 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    .order-thankyou h3 em { font-style: italic; color: var(--color-accent); }
+    .order-thankyou p {
+      font-size: 0.9375rem;
+      color: rgba(28, 26, 23, 0.6);
+      line-height: 1.8;
+      max-width: 480px;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────── */
+    .order-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      position: sticky;
+      top: calc(var(--nav-height) + 2rem);
+    }
+
+    .sidebar-image-slot {
+      aspect-ratio: 1 / 1;
+      background: rgba(28, 26, 23, 0.04);
+      border: 1px solid var(--color-rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 2px;
+    }
+    .sidebar-image-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sidebar-image-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      color: rgba(28, 26, 23, 0.15);
+      font-size: 0.625rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .sidebar-image-placeholder svg { width: 40px; height: 40px; }
+
+    /* Summary */
+    .order-summary { border: 1px solid var(--color-rule); padding: 2rem; }
+    .order-summary-title {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .order-summary-title::after { content: ''; flex: 1; height: 1px; background: var(--color-rule); }
+
+    .order-summary-note {
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: rgba(28, 26, 23, 0.6);
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-rule);
+      margin-bottom: 1.5rem;
+    }
+
+    .price-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-rule);
+      margin-bottom: 1.25rem;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.875rem;
+      color: rgba(28, 26, 23, 0.6);
+    }
+    .price-row-value { font-weight: 500; color: var(--color-text); }
+    .price-row--total .price-row-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text);
+    }
+    .price-row--total .price-row-value {
+      font-family: var(--font-heading);
+      font-size: 1.625rem;
+      font-weight: 400;
+      color: var(--color-accent);
+      letter-spacing: -0.01em;
+      transition: all 200ms;
+    }
+
+    /* Bank details */
+    .bank-details { display: flex; flex-direction: column; gap: 0.875rem; }
+    .bank-details-title {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.4);
+      margin-bottom: 0.25rem;
+    }
+    .bank-row { display: flex; flex-direction: column; gap: 2px; }
+    .bank-row-label {
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.35);
+    }
+    .bank-row-value { font-size: 0.9375rem; color: var(--color-text); line-height: 1.5; }
+    .bank-row-value.mono {
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      color: var(--color-accent);
+    }
+    .bank-code {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(184, 149, 90, 0.08);
+      border: 1px solid rgba(184, 149, 90, 0.2);
+      padding: 0.375rem 0.75rem;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--color-accent);
+      margin-top: 2px;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    .footer {
+      background: var(--color-bg-dark);
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(245, 240, 232, 0.06);
+    }
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-logo { display: flex; align-items: center; }
+    .footer-logo img { height: 48px; width: auto; opacity: 0.8; }
+    .footer-info {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: rgba(245, 240, 232, 0.25);
+      text-align: right;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .order-content { grid-template-columns: 1fr; gap: 3rem; }
+      .order-sidebar { position: static; }
+      .sidebar-image-slot { max-width: 480px; }
+      .card-picker { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .page-header { padding: 3rem 1.25rem 2.5rem; }
+      .order-content { padding: 3rem 1.25rem 4rem; }
+      .nav { padding: 0 1.25rem; }
+      .card-picker { grid-template-columns: repeat(3, 1fr); }
+      .form-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 380px) {
+      .card-picker { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ═══════════════════════════════════════════════ -->
+  <nav class="nav" aria-label="Navigáció">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-back" aria-label="Vissza a főoldalra">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Főoldal
+      </a>
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/logo.png" alt="Carol Gasztroműhely">
+      </a>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HEADER ════════════════════════════════════════ -->
+  <header class="page-header">
+    <div class="page-header-label">Carol Gasztroműhely</div>
+    <h1>Ajándékkártya <em>rendelés</em></h1>
+    <p class="page-header-sub">
+      Debrecen · Böszörményi út 68 &nbsp;·&nbsp; +36 70 528 6308
+    </p>
+  </header>
+
+  <!-- ══ ORDER CONTENT ══════════════════════════════════════ -->
+  <div class="order-content">
+
+    <!-- ── Left: Form ──────────────────────────────────── -->
+    <div class="order-form-section">
+      <h2>Adja meg <em>adatait</em></h2>
+
+      <div class="order-form-inner" id="order-form-inner">
+        <form id="order-form" novalidate>
+
+          <!-- 1. Gift card value picker -->
+          <div class="form-section-title">Ajándékkártya értéke</div>
+
+          <div class="card-picker" role="group" aria-label="Válasszon értéket">
+            <div class="card-option">
+              <input type="radio" name="ertek" id="e5000" value="5000">
+              <label for="e5000">
+                <span class="card-price">5 000</span>
+                <span class="card-currency">Ft</span>
+                <span class="card-check" aria-hidden="true"></span>
+              </label>
+            </div>
+            <div class="card-option">
+              <input type="radio" name="ertek" id="e10000" value="10000">
+              <label for="e10000">
+                <span class="card-price">10 000</span>
+                <span class="card-currency">Ft</span>
+                <span class="card-check" aria-hidden="true"></span>
+              </label>
+            </div>
+            <div class="card-option">
+              <input type="radio" name="ertek" id="e18000" value="18000" checked>
+              <label for="e18000">
+                <span class="card-price">18 000</span>
+                <span class="card-currency">Ft</span>
+                <span class="card-check" aria-hidden="true"></span>
+              </label>
+            </div>
+            <div class="card-option">
+              <input type="radio" name="ertek" id="e25000" value="25000">
+              <label for="e25000">
+                <span class="card-price">25 000</span>
+                <span class="card-currency">Ft</span>
+                <span class="card-check" aria-hidden="true"></span>
+              </label>
+            </div>
+            <div class="card-option">
+              <input type="radio" name="ertek" id="e50000" value="50000">
+              <label for="e50000">
+                <span class="card-price">50 000</span>
+                <span class="card-currency">Ft</span>
+                <span class="card-check" aria-hidden="true"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 2. Personal details -->
+          <div class="form-section-title" style="margin-top: 0.5rem;">Személyes adatok</div>
+
+          <div class="form-group">
+            <label for="nev">Teljes név</label>
+            <input type="text" id="nev" name="nev" placeholder="Pl. Kovács Éva"
+                   autocomplete="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-mail cím</label>
+            <input type="email" id="email" name="email" placeholder="kovacseva@email.hu"
+                   autocomplete="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="telefon">Telefonszám</label>
+            <input type="tel" id="telefon" name="telefon" placeholder="+36 70 123 4567"
+                   autocomplete="tel" required>
+          </div>
+
+          <!-- 3. Delivery address — split fields -->
+          <div class="form-section-title" style="margin-top: 0.5rem;">Postai cím</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="iranyitoszam">Irányítószám</label>
+              <input type="text" id="iranyitoszam" name="iranyitoszam"
+                     placeholder="4032" inputmode="numeric" maxlength="4"
+                     autocomplete="postal-code" required>
+            </div>
+            <div class="form-group">
+              <label for="varos">Város</label>
+              <input type="text" id="varos" name="varos"
+                     placeholder="Debrecen"
+                     autocomplete="address-level2" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="utca">Utca, út, tér</label>
+            <input type="text" id="utca" name="utca"
+                   placeholder="Pl. Böszörményi út"
+                   autocomplete="address-line1" required>
+          </div>
+
+          <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+            <div class="form-group">
+              <label for="hazszam">Házszám</label>
+              <input type="text" id="hazszam" name="hazszam"
+                     placeholder="68."
+                     autocomplete="address-line2" required>
+            </div>
+            <div class="form-group">
+              <label for="emelet">Emelet / ajtó <span class="form-hint">(nem kötelező)</span></label>
+              <input type="text" id="emelet" name="emelet"
+                     placeholder="Pl. 2/4"
+                     autocomplete="address-line3">
+            </div>
+          </div>
+
+          <button type="submit" class="form-submit">Rendelés elküldése</button>
+
+        </form>
+      </div>
+
+      <!-- Thank you state -->
+      <div class="order-thankyou" id="order-thankyou">
+        <div class="thankyou-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h3>Köszönjük <em>rendelését!</em></h3>
+        <p>
+          Hamarosan felvesszük Önnel a kapcsolatot a megadott elérhetőségeken.
+          Kérjük, az utalást a lenti számlaszámra intézze — az ajándékkártyát
+          a beérkezést követő napon postázzuk.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── Right: Sidebar ──────────────────────────────── -->
+    <aside class="order-sidebar">
+
+      <!-- Square image slot -->
+      <div class="sidebar-image-slot">
+        <!-- Replace the placeholder div below with an <img> tag when the gift card photo is ready:
+             <img src="assets/images/ajandekkartyak.jpg" alt="Carol Gasztroműhely ajándékkártya"> -->
+        <div class="sidebar-image-placeholder" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="0.75"
+               stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="13" width="40" height="26" rx="3"/>
+            <line x1="4" y1="21" x2="44" y2="21"/>
+            <line x1="12" y1="30" x2="22" y2="30"/>
+            <line x1="12" y1="34" x2="17" y2="34"/>
+            <circle cx="36" cy="32" r="4"/>
+          </svg>
+          <span>Ajándékkártya</span>
+        </div>
+      </div>
+
+      <!-- Order summary -->
+      <div class="order-summary">
+
+        <div class="order-summary-title">Összegzés</div>
+
+        <p class="order-summary-note">
+          Postai úton megküldjük a részvételi díj beérkezését követő napon.
+        </p>
+
+        <div class="price-rows">
+          <div class="price-row">
+            <span class="price-row-label">Ajándékkártya ára</span>
+            <span class="price-row-value" id="summary-card-price">18 000 Ft</span>
+          </div>
+          <div class="price-row">
+            <span class="price-row-label">Postaköltség</span>
+            <span class="price-row-value">+ 600 Ft</span>
+          </div>
+        </div>
+
+        <div class="price-row price-row--total">
+          <span class="price-row-label">Összesen</span>
+          <span class="price-row-value" id="summary-total">18 600 Ft</span>
+        </div>
+
+        <div style="height: 1.75rem;"></div>
+
+        <div class="bank-details">
+          <div class="bank-details-title">Számlaszám, melyre utalhat</div>
+
+          <div class="bank-row">
+            <span class="bank-row-label">Bank</span>
+            <span class="bank-row-value">Takarékbank Zrt.</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-row-label">Kedvezményezett neve</span>
+            <span class="bank-row-value">Carol Fantasy Kft.</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-row-label">Számlaszám</span>
+            <span class="bank-row-value mono">59900043-00574088</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-row-label">Közlemény</span>
+            <div class="bank-code">792772</div>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <img src="assets/images/logo.png" alt="Carol Gasztroműhely">
+      </a>
+      <div class="footer-info">
+        4032 Debrecen, Böszörményi út 68.<br>
+        Mindennap 09:30 – 18:30
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    const SHIPPING = 600;
+
+    // Update sidebar totals when picker changes
+    document.querySelectorAll('input[name="ertek"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        var val = parseInt(this.value, 10);
+        var total = val + SHIPPING;
+        document.getElementById('summary-card-price').textContent = formatHUF(val) + ' Ft';
+        document.getElementById('summary-total').textContent = formatHUF(total) + ' Ft';
+      });
+    });
+
+    function formatHUF(n) {
+      return n.toLocaleString('hu-HU');
+    }
+
+    // Required field ids
+    var required = ['nev', 'email', 'telefon', 'iranyitoszam', 'varos', 'utca', 'hazszam'];
+
+    document.getElementById('order-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var valid = true;
+      required.forEach(function (id) {
+        var el = document.getElementById(id);
+        var val = el.value.trim();
+        if (!val) {
+          el.classList.add('error');
+          el.addEventListener('input', function () { el.classList.remove('error'); }, { once: true });
+          valid = false;
+        }
+      });
+
+      if (!valid) return;
+
+      document.getElementById('order-form-inner').classList.add('hidden');
+      document.getElementById('order-thankyou').classList.add('visible');
+      window.scrollTo({
+        top: document.querySelector('.order-form-section').offsetTop - 120,
+        behavior: 'smooth'
+      });
+    });
+  })();
+  </script>
+
+</body>
+</html>

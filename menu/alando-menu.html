@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Állandó Menü — Carol Gasztroműhely</title>
+  <meta name="description" content="Carol Gasztroműhely állandó étlapja. Friss, minőségi alapanyagokból készített fogásaink.">
+
+  <!-- ══ CONFIG ════════════════════════════════════════════
+       1. Paste the Google Sheet ID below (same sheet as the weekly menu)
+       2. Change SHEET_NAME to the tab name of your állandó menü sheet
+          (e.g. 'Alando', 'Etlap', 'Menu' — whatever you named the tab)
+       3. Expected columns: Kategória | Név | Leírás | Ár | Kép
+          "Kép" should be a direct image URL (Google Drive public link, etc.)
+          Leave the Kép cell empty to show a placeholder.
+  ═════════════════════════════════════════════════════════ -->
+  <script>
+    const SHEET_ID   = '11J_PYoFihazIz1jFThlxFDGYWBv71cMYqSgbT6XCxfA';
+    const SHEET_NAME = 'Állandó Menü'; // must match your exact tab name in Google Sheets
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Tokens ──────────────────────────────────────────── */
+    :root {
+      --color-bg:       #F5F0E8;
+      --color-text:     #1C1A17;
+      --color-accent:   #B8955A;
+      --color-bg-dark:  #1C1A17;
+      --color-text-dark:#F5F0E8;
+      --color-rule:     rgba(28, 26, 23, 0.12);
+      --font-heading:   'Cormorant Garamond', Georgia, serif;
+      --font-body:      'Inter', system-ui, sans-serif;
+      --max-width:      1200px;
+      --nav-height:     72px;
+      --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ── Reset ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Navigation ──────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      background: rgba(245, 240, 232, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-rule);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .nav-logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+      transition: opacity 150ms;
+    }
+    .nav-logo:hover img { opacity: 0.8; }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.45);
+      transition: color 150ms;
+    }
+    .nav-back:hover { color: var(--color-accent); }
+    .nav-back svg { width: 14px; height: 14px; }
+
+    /* ── Page header ─────────────────────────────────────── */
+    .page-header {
+      padding: 5rem 2rem 4rem;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      border-bottom: 1px solid var(--color-rule);
+      margin-bottom: 0;
+    }
+
+    .page-header-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .page-header-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--color-accent);
+    }
+
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      line-height: 1.0;
+    }
+    .page-header h1 em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+
+    .page-header-sub {
+      margin-top: 1.5rem;
+      font-size: 0.8125rem;
+      letter-spacing: 0.06em;
+      color: rgba(28, 26, 23, 0.45);
+      line-height: 1.8;
+    }
+
+    /* ── Menu content ────────────────────────────────────── */
+    .menu-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    /* ── Category section ────────────────────────────────── */
+    .category-section {
+      padding: 4rem 0 2rem;
+      border-bottom: 1px solid var(--color-rule);
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.7s var(--ease-out) forwards;
+    }
+    .category-section:last-child { border-bottom: none; }
+
+    .category-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .category-name {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .category-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--color-rule);
+    }
+    .category-rule-end { display: none; }
+
+    /* ── Item grid ───────────────────────────────────────── */
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    /* ── Menu item card ──────────────────────────────────── */
+    .menu-item {
+      background: var(--color-bg);
+      border: 1px solid var(--color-rule);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s var(--ease-out);
+    }
+    .menu-item:hover {
+      box-shadow: 0 8px 40px rgba(28, 26, 23, 0.08);
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Image slot */
+    .item-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: rgba(28, 26, 23, 0.04);
+      position: relative;
+    }
+    .item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out);
+    }
+    .menu-item:hover .item-image img {
+      transform: scale(1.04);
+    }
+
+    /* Placeholder when no image */
+    .item-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(28, 26, 23, 0.03);
+    }
+    .item-image-placeholder svg {
+      width: 32px;
+      height: 32px;
+      color: rgba(28, 26, 23, 0.12);
+    }
+
+    /* Item body */
+    .item-body {
+      padding: 1.25rem 1.375rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .item-name {
+      font-family: var(--font-heading);
+      font-size: 1.3125rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      color: var(--color-text);
+    }
+
+    .item-desc {
+      font-size: 0.8125rem;
+      line-height: 1.65;
+      color: rgba(28, 26, 23, 0.55);
+      flex: 1;
+    }
+
+    .item-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.875rem;
+      padding-top: 0.875rem;
+      border-top: 1px solid var(--color-rule);
+    }
+
+    .item-price {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
+    }
+
+    .item-price-label {
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.3);
+    }
+
+    /* ── Loading state ───────────────────────────────────── */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 6rem 2rem;
+      color: rgba(28, 26, 23, 0.4);
+    }
+    .loading-bar {
+      width: 64px;
+      height: 1px;
+      background: rgba(28, 26, 23, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-accent);
+      animation: loadSweep 1.4s ease-in-out infinite;
+    }
+    .loading-text {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── Not configured / error ──────────────────────────── */
+    .state-msg {
+      padding: 5rem 2rem;
+      text-align: center;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .state-msg h2 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    .state-msg p {
+      font-size: 0.9375rem;
+      color: rgba(28, 26, 23, 0.55);
+      line-height: 1.8;
+    }
+    .state-msg code {
+      display: inline-block;
+      background: rgba(28, 26, 23, 0.07);
+      padding: 2px 8px;
+      font-size: 0.8125rem;
+      border-radius: 2px;
+      font-family: monospace;
+      margin-top: 0.5rem;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    .footer {
+      background: var(--color-bg-dark);
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(245, 240, 232, 0.06);
+    }
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-logo {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 400;
+      color: rgba(245, 240, 232, 0.5);
+      letter-spacing: 0.04em;
+    }
+    .footer-logo span { color: var(--color-accent); }
+    .footer-info {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: rgba(245, 240, 232, 0.25);
+      text-align: right;
+    }
+
+    /* ── Animations ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes loadSweep {
+      0%   { transform: translateX(-100%); }
+      50%  { transform: translateX(0); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .items-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .items-grid { grid-template-columns: 1fr; }
+      .page-header { padding: 3rem 1.25rem 2.5rem; }
+      .menu-content { padding: 0 1.25rem 4rem; }
+      .nav { padding: 0 1.25rem; }
+      .category-section { padding: 3rem 0 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ═══════════════════════════════════════════════ -->
+  <nav class="nav" aria-label="Navigáció">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-back" aria-label="Vissza a főoldalra">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Főoldal
+      </a>
+      <a href="../index.html" class="nav-logo">
+        <img src="../assets/images/logo.png" alt="Carol Gasztroműhely">
+      </a>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HEADER ════════════════════════════════════════ -->
+  <header class="page-header">
+    <div class="page-header-label">Carol Gasztroműhely</div>
+    <h1>Állandó <em>étlapunk</em></h1>
+    <p class="page-header-sub">
+      Debrecen · Böszörményi út 68 &nbsp;·&nbsp; +36 70 528 6308
+    </p>
+  </header>
+
+  <!-- ══ MENU CONTENT ═══════════════════════════════════════ -->
+  <main class="menu-content" id="menu-content">
+    <div class="loading" id="loading-state">
+      <div class="loading-bar"></div>
+      <span class="loading-text">Étlap betöltése…</span>
+    </div>
+  </main>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">Carol<span>.</span></div>
+      <div class="footer-info">
+        4032 Debrecen, Böszörményi út 68.<br>
+        Mindennap 09:30 – 18:30
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── Helpers ─────────────────────────────────────────── */
+    function el(tag, cls, html) {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (html !== undefined) e.innerHTML = html;
+      return e;
+    }
+
+    /* ── Build placeholder SVG ───────────────────────────── */
+    function placeholderSVG() {
+      return `<div class="item-image-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+      </div>`;
+    }
+
+    /* ── Build a single item card ────────────────────────── */
+    function buildItem(item, delay) {
+      const card = el('article', 'menu-item');
+      card.style.animationDelay = delay + 'ms';
+
+      const imgWrap = el('div', 'item-image');
+      if (item.kep) {
+        imgWrap.innerHTML = `<img src="${item.kep}" alt="${item.nev}" loading="lazy">`;
+      } else {
+        imgWrap.innerHTML = placeholderSVG();
+      }
+
+      const body = el('div', 'item-body');
+      body.innerHTML = `
+        <div class="item-name">${item.nev}</div>
+        ${item.leiras ? `<div class="item-desc">${item.leiras}</div>` : ''}
+        ${item.ar ? `
+          <div class="item-footer">
+            <div>
+              <div class="item-price">${formatPrice(item.ar)}</div>
+              <div class="item-price-label">Ár</div>
+            </div>
+          </div>` : ''}
+      `;
+
+      card.appendChild(imgWrap);
+      card.appendChild(body);
+      return card;
+    }
+
+    /* ── Format price ────────────────────────────────────── */
+    function formatPrice(raw) {
+      const num = parseFloat(String(raw).replace(/[^0-9.]/g, ''));
+      if (isNaN(num)) return raw;
+      return num.toLocaleString('hu-HU') + ' Ft';
+    }
+
+    /* ── Render all categories ───────────────────────────── */
+    function render(categories) {
+      const container = document.getElementById('menu-content');
+      container.innerHTML = '';
+
+      let sectionDelay = 0;
+
+      Object.entries(categories).forEach(([catName, items]) => {
+        const section = el('section', 'category-section');
+        section.style.animationDelay = sectionDelay + 'ms';
+        sectionDelay += 120;
+
+        const heading = el('div', 'category-heading');
+        heading.innerHTML = `
+          <h2 class="category-name">${catName}</h2>
+          <div class="category-rule"></div>
+          <span class="category-rule-end"></span>
+        `;
+
+        const grid = el('div', 'items-grid');
+        items.forEach((item, i) => {
+          grid.appendChild(buildItem(item, i * 60));
+        });
+
+        section.appendChild(heading);
+        section.appendChild(grid);
+        container.appendChild(section);
+      });
+    }
+
+    /* ── Placeholder data (shown when SHEET_ID not set) ─── */
+    function renderPlaceholderMenu() {
+      render({
+        'Levesek': [
+          { nev: 'Paradicsomleves', leiras: 'Friss paradicsomból, bazsalikommal és pirított kenyérkockával tálalva.', ar: '1 400', kep: '' },
+          { nev: 'Erdei gombaleves', leiras: 'Vegyes erdei gombák tejszínes alapon, friss petrezselyemmel.', ar: '1 600', kep: '' },
+          { nev: 'Gulyásleves', leiras: 'Hagyományos magyar marhagulyás csipetkével és füstölt paprikával.', ar: '1 800', kep: '' },
+        ],
+        'Előételek': [
+          { nev: 'Libamáj mousse', leiras: 'Házi libamáj mousse briós pirítóssal és hagymalekvárral.', ar: '2 600', kep: '' },
+          { nev: 'Burrata saláta', leiras: 'Friss burrata koktélparadicsommal, bazsalikomos vinaigrette-tel és pirított fenyőmaggal.', ar: '2 200', kep: '' },
+          { nev: 'Carpaccio', leiras: 'Vékonyra szelt marhabélszín parmezánforgácsokkal és citromos kapribogyós öntettel.', ar: '2 800', kep: '' },
+        ],
+        'Főételek': [
+          { nev: 'Grillezett lazacfilé', leiras: 'Bőrös lazac citromos burgonyapürével, spenótos mártással és grillezett spárgával.', ar: '4 800', kep: '' },
+          { nev: 'Szűzérme steak frites', leiras: 'Sertésszűz sous vide-ban, borsos mártással és hasábburgonya kíséretében.', ar: '4 200', kep: '' },
+          { nev: 'Kacsacomb konfitálva', leiras: 'Lassan sült kacsacomb vörösboros lencsével és narancsos mártással.', ar: '5 200', kep: '' },
+          { nev: 'Töltött paprika', leiras: 'Hagyományos töltött paprika darált hús és rizs töltelékkel, sűrű paradicsomos szósszal.', ar: '3 400', kep: '' },
+          { nev: 'Vegán curryrizs', leiras: 'Sütőtökkrémes curryszósz basmati rizzsel és pirított kesudióval.', ar: '3 000', kep: '' },
+        ],
+        'Desszertek': [
+          { nev: 'Somlói galuska', leiras: 'Piskóta, diós krém, csokoládéöntet és tejszínhab — az igazi klasszikus.', ar: '1 600', kep: '' },
+          { nev: 'Panna cotta', leiras: 'Vaníliás tejszínhab-desszert friss eperszósszal tálalva.', ar: '1 400', kep: '' },
+          { nev: 'Csokis fondant', leiras: 'Folyós étcsokoládé szív vaníliafagylalttal és friss gyümölcsökkel.', ar: '1 800', kep: '' },
+        ],
+      });
+    }
+
+    /* ── Show message states ─────────────────────────────── */
+    function showNotConfigured() {
+      document.getElementById('menu-content').innerHTML = `
+        <div class="state-msg">
+          <h2>Étlap hamarosan</h2>
+          <p>
+            Az állandó étlap Google Sheets-ből töltődik be.<br>
+            A beállításhoz illeszd be a táblázat azonosítóját:<br>
+            <code>const SHEET_ID = "1BxiMVs0XRA…";</code><br>
+            és adj meg egy fül nevet:<br>
+            <code>const SHEET_NAME = "Alando";</code>
+          </p>
+        </div>`;
+    }
+
+    function showError(msg) {
+      document.getElementById('menu-content').innerHTML = `
+        <div class="state-msg">
+          <h2>Sikertelen betöltés</h2>
+          <p>${msg}</p>
+        </div>`;
+    }
+
+    /* ── Column finder ───────────────────────────────────── */
+    function findCol(cols, ...candidates) {
+      for (const cand of candidates) {
+        const idx = cols.findIndex(c =>
+          c.label && c.label.toLowerCase().replace(/\s|é|á|ó|ő|ü|ú|ö|í/g, s =>
+            ({é:'e',á:'a',ó:'o',ő:'o',ü:'u',ú:'u',ö:'o',í:'i'}[s]||''))
+          === cand.toLowerCase()
+        );
+        if (idx !== -1) return idx;
+      }
+      return -1;
+    }
+
+    /* ── Fetch & parse Google Sheet ──────────────────────── */
+    function fetchMenu() {
+      if (SHEET_ID === 'PASTE_SHEET_ID_HERE' || !SHEET_ID) {
+        renderPlaceholderMenu();
+        return;
+      }
+
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+
+      fetch(url)
+        .then(r => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.text();
+        })
+        .then(text => {
+          const json = text.replace(/^[^(]+\(/, '').replace(/\);?\s*$/, '');
+          const data = JSON.parse(json);
+          const cols = data.table.cols;
+          const rows = data.table.rows;
+
+          const catIdx  = findCol(cols, 'kategoria', 'kategória', 'category', 'kat');
+          const nevIdx  = findCol(cols, 'nev', 'név', 'name', 'fogás', 'fogas');
+          const leiIdx  = findCol(cols, 'leiras', 'leírás', 'description', 'desc', 'leirás');
+          const arIdx   = findCol(cols, 'ar', 'ár', 'price', 'ara');
+          const kepIdx  = findCol(cols, 'kep', 'kép', 'image', 'img', 'foto', 'fotó');
+
+          if (nevIdx === -1) {
+            showError('Nem találhatók fogások a táblázatban. Ellenőrizd az oszlopfejléceket (Kategória, Név, Leírás, Ár, Kép).');
+            return;
+          }
+
+          // Group by category
+          const categories = {};
+
+          rows.forEach(row => {
+            const c = row.c;
+            const nev = c[nevIdx] && c[nevIdx].v ? String(c[nevIdx].v).trim() : '';
+            if (!nev) return;
+
+            const cat    = catIdx  !== -1 && c[catIdx]  && c[catIdx].v  ? String(c[catIdx].v).trim()  : 'Egyéb';
+            const leiras = leiIdx  !== -1 && c[leiIdx]  && c[leiIdx].v  ? String(c[leiIdx].v).trim()  : '';
+            const ar     = arIdx   !== -1 && c[arIdx]   && c[arIdx].v   ? String(c[arIdx].v).trim()   : '';
+            const kep    = kepIdx  !== -1 && c[kepIdx]  && c[kepIdx].v  ? String(c[kepIdx].v).trim()  : '';
+
+            if (!categories[cat]) categories[cat] = [];
+            categories[cat].push({ nev, leiras, ar, kep });
+          });
+
+          if (Object.keys(categories).length === 0) {
+            showError('A táblázatban nem találhatók elemek. Ellenőrizd, hogy a megfelelő lapot adtad-e meg (SHEET_NAME).');
+            return;
+          }
+
+          render(categories);
+        })
+        .catch(err => {
+          console.error(err);
+          showError('Az étlap betöltése nem sikerült. Kérjük, próbálj újra később.<br><small style="opacity:0.5">' + err.message + '</small>');
+        });
+    }
+
+    fetchMenu();
+  })();
+  </script>
+
+</body>
+</html>

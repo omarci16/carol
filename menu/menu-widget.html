@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carol — Heti Menü</title>
+
+  <!-- ── CONFIG ─────────────────────────────────────────────
+       Paste your Google Sheet ID below.
+       Sheet must be publicly shared ("Anyone with the link can view").
+       Expected columns: Day | Leves | Főétel | Desszert
+       ─────────────────────────────────────────────────────── -->
+  <script>
+    const SHEET_ID   = '11J_PYoFihazIz1jFThlxFDGYWBv71cMYqSgbT6XCxfA';
+    const SHEET_NAME = 'Heti Menü'; // must match your exact tab name in Google Sheets
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Tokens ─────────────────────────────────────────── */
+    :root {
+      --color-bg:      #F5F0E8;
+      --color-text:    #1C1A17;
+      --color-accent:  #B8955A;
+      --color-rule:    rgba(28, 26, 23, 0.12);
+      --color-today-border: var(--color-accent);
+      --color-today-bg:     rgba(184, 149, 90, 0.06);
+      --font-heading:  'Cormorant Garamond', Georgia, serif;
+      --font-body:     'Inter', system-ui, sans-serif;
+      --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ── Reset ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Widget wrapper ─────────────────────────────────── */
+    .widget {
+      padding: 2.5rem 2rem 2.5rem;
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    .widget-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-rule);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      gap: 1rem;
+    }
+
+    .widget-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .widget-title em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+
+    .widget-date {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.4);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ── Course legend ──────────────────────────────────── */
+    .course-legend {
+      display: grid;
+      grid-template-columns: 120px 1fr 1fr 1fr;
+      gap: 0.5rem 1.5rem;
+      padding: 0 0 0.75rem;
+      border-bottom: 1px solid var(--color-rule);
+      margin-bottom: 0;
+    }
+    .legend-day { /* empty spacer */ }
+    .legend-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.38);
+    }
+
+    /* ── Day rows ───────────────────────────────────────── */
+    .menu-day {
+      display: grid;
+      grid-template-columns: 120px 1fr 1fr 1fr;
+      gap: 0.5rem 1.5rem;
+      align-items: start;
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid var(--color-rule);
+      transition: background 0.2s ease;
+      position: relative;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: rowIn 0.5s var(--ease-out) forwards;
+    }
+    .menu-day:last-child { border-bottom: none; }
+    .menu-day:hover { background: rgba(28, 26, 23, 0.02); }
+
+    /* Today highlight */
+    .menu-day.is-today {
+      background: var(--color-today-bg);
+      border-left: 2px solid var(--color-today-border);
+      padding-left: calc(1rem - 2px);
+    }
+    .menu-day.is-today .day-name {
+      color: var(--color-accent);
+    }
+    .menu-day.is-today::before {
+      content: 'Ma';
+      position: absolute;
+      top: 0.6rem;
+      right: 0.75rem;
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      background: rgba(184, 149, 90, 0.12);
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+
+    /* Animation delays */
+    .menu-day:nth-child(1) { animation-delay: 0.05s; }
+    .menu-day:nth-child(2) { animation-delay: 0.12s; }
+    .menu-day:nth-child(3) { animation-delay: 0.19s; }
+    .menu-day:nth-child(4) { animation-delay: 0.26s; }
+    .menu-day:nth-child(5) { animation-delay: 0.33s; }
+
+    .day-name {
+      font-family: var(--font-heading);
+      font-size: 1.375rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--color-text);
+      padding-top: 2px;
+    }
+    .day-name small {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.35);
+      margin-top: 2px;
+    }
+
+    .dish {
+      font-family: var(--font-heading);
+      font-size: 1.1875rem;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--color-text);
+    }
+    .dish.empty {
+      font-style: italic;
+      color: rgba(28, 26, 23, 0.25);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+    }
+
+    /* ── Loading state ──────────────────────────────────── */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      padding: 4rem 2rem;
+      color: rgba(28, 26, 23, 0.4);
+    }
+    .loading-bar {
+      width: 48px;
+      height: 1px;
+      background: var(--color-accent);
+      position: relative;
+      overflow: hidden;
+    }
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-bg);
+      animation: loadingSweep 1.2s ease-in-out infinite;
+    }
+    .loading-text {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── Not configured state ───────────────────────────── */
+    .not-configured {
+      padding: 3rem 2rem;
+      text-align: center;
+      border: 1px dashed var(--color-rule);
+      margin: 1rem 0;
+    }
+    .not-configured h3 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+    .not-configured p {
+      font-size: 0.875rem;
+      color: rgba(28, 26, 23, 0.55);
+      line-height: 1.7;
+      max-width: 420px;
+      margin: 0 auto 1rem;
+    }
+    .not-configured code {
+      display: inline-block;
+      background: rgba(28, 26, 23, 0.07);
+      padding: 2px 8px;
+      font-size: 0.8125rem;
+      border-radius: 2px;
+      font-family: monospace;
+    }
+
+    /* ── Error state ────────────────────────────────────── */
+    .error-state {
+      padding: 2rem;
+      text-align: center;
+      color: rgba(28, 26, 23, 0.5);
+    }
+    .error-state p { font-size: 0.875rem; line-height: 1.7; }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    .widget-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--color-rule);
+      gap: 1rem;
+    }
+    .widget-footer-logo {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 400;
+      color: rgba(28, 26, 23, 0.35);
+      letter-spacing: 0.04em;
+    }
+    .widget-footer-logo span { color: var(--color-accent); }
+
+    .widget-footer-note {
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      color: rgba(28, 26, 23, 0.3);
+      text-align: right;
+    }
+
+    /* ── Animations ─────────────────────────────────────── */
+    @keyframes rowIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes loadingSweep {
+      0%   { transform: translateX(-100%); }
+      50%  { transform: translateX(0%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* ── Mobile ─────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .widget { padding: 1.5rem 1rem 2rem; }
+
+      .course-legend,
+      .menu-day {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .course-legend { display: none; }
+
+      .menu-day {
+        padding: 1.25rem 0.75rem;
+        gap: 0.75rem;
+      }
+      .menu-day.is-today { padding-left: calc(0.75rem - 2px); }
+
+      .day-name { margin-bottom: 0.75rem; }
+
+      .dish {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+      }
+      .dish::before {
+        content: attr(data-label);
+        font-family: var(--font-body);
+        font-size: 0.625rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(28, 26, 23, 0.35);
+        flex-shrink: 0;
+        width: 60px;
+      }
+
+      .widget-footer { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .widget-footer-note { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="widget" id="widget">
+
+  <header class="widget-header">
+    <h1 class="widget-title">Heti <em>menü</em></h1>
+    <div class="widget-date" id="widget-date"></div>
+  </header>
+
+  <div id="menu-container">
+    <div class="loading" id="loading-state">
+      <div class="loading-bar"></div>
+      <span class="loading-text">Betöltés…</span>
+    </div>
+  </div>
+
+  <footer class="widget-footer">
+    <div class="widget-footer-logo">Carol<span>.</span></div>
+    <div class="widget-footer-note">
+      +36 70 528 6308 · carol@carolfantasy.hu
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  /* ── Config check ───────────────────────────────────────── */
+
+  const DAYS_HU = ['Vasárnap','Hétfő','Kedd','Szerda','Csütörtök','Péntek','Szombat'];
+  const DAYS_EN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const DAYS_SHORT = {
+    'Hétfő':'Hét', 'Kedd':'Kedd', 'Szerda':'Sze', 'Csütörtök':'Csüt', 'Péntek':'Pén',
+    'Monday':'Mon', 'Tuesday':'Tue', 'Wednesday':'Wed', 'Thursday':'Thu', 'Friday':'Fri'
+  };
+
+  const MONTHS_HU = [
+    'január','február','március','április','május','június',
+    'július','augusztus','szeptember','október','november','december'
+  ];
+
+  /* ── Date helpers ───────────────────────────────────────── */
+  const today = new Date();
+  const todayName = DAYS_HU[today.getDay()];
+  const todayEN   = DAYS_EN[today.getDay()];
+
+  function setDateLabel() {
+    const el = document.getElementById('widget-date');
+    if (!el) return;
+    // Find this week's Monday (day 1) and Saturday (day 6)
+    const dow = today.getDay(); // 0=Sun … 6=Sat
+    const diffToMon = (dow === 0) ? -6 : 1 - dow;
+    const mon = new Date(today); mon.setDate(today.getDate() + diffToMon);
+    const sat = new Date(mon);  sat.setDate(mon.getDate() + 5);
+    const fmt = (d) => `${d.getFullYear()}. ${MONTHS_HU[d.getMonth()]} ${d.getDate()}.`;
+    el.innerHTML = `${fmt(mon)}<br><span>– ${fmt(sat)}</span>`;
+  }
+  setDateLabel();
+
+  /* ── Normalize day name ─────────────────────────────────── */
+  function normalizeDay(raw) {
+    if (!raw) return '';
+    const s = raw.trim();
+    // Already Hungarian
+    if (DAYS_HU.includes(s)) return s;
+    // English → Hungarian
+    const idx = DAYS_EN.indexOf(s);
+    if (idx !== -1) return DAYS_HU[idx];
+    // Case-insensitive Hungarian
+    const lower = s.toLowerCase();
+    const found = DAYS_HU.find(d => d.toLowerCase() === lower);
+    if (found) return found;
+    return s;
+  }
+
+  /* ── Render menu ────────────────────────────────────────── */
+  function renderMenu(days) {
+    const container = document.getElementById('menu-container');
+
+    // Legend row
+    const legend = document.createElement('div');
+    legend.className = 'course-legend';
+    legend.innerHTML = `
+      <div class="legend-day"></div>
+      <div class="legend-label">Leves</div>
+      <div class="legend-label">Főétel</div>
+      <div class="legend-label">Desszert</div>
+    `;
+
+    const rows = days.map(day => {
+      const isToday = day.name === todayName || day.name === todayEN;
+      const row = document.createElement('div');
+      row.className = 'menu-day' + (isToday ? ' is-today' : '');
+      row.innerHTML = `
+        <div class="day-name">
+          ${day.name}
+          <small>${DAYS_SHORT[day.name] || day.name.slice(0,3)}</small>
+        </div>
+        <div class="dish" data-label="Leves">${day.leves  || '<span class="empty">–</span>'}</div>
+        <div class="dish" data-label="Főétel">${day.foetel || '<span class="empty">–</span>'}</div>
+        <div class="dish" data-label="Desszert">${day.dessert || '<span class="empty">–</span>'}</div>
+      `;
+      return row;
+    });
+
+    container.innerHTML = '';
+    container.appendChild(legend);
+    rows.forEach(r => container.appendChild(r));
+
+    // Tell parent iframe to resize — wait for fonts/layout to settle
+    function sendHeight() {
+      try {
+        window.parent.postMessage({ type: 'carol-menu-height', height: document.body.scrollHeight + 8 }, '*');
+      } catch(e) {}
+    }
+    setTimeout(sendHeight, 120);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(sendHeight);
+    }
+  }
+
+  /* ── Fetch from Google Sheets ───────────────────────────── */
+  function fetchMenu() {
+    if (SHEET_ID === 'PASTE_SHEET_ID_HERE' || !SHEET_ID) {
+      renderPlaceholderMenu();
+      return;
+    }
+
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.text();
+      })
+      .then(text => {
+        // Strip the JSONP wrapper: /*O_o*/ google.visualization.Query.setResponse({...});
+        const json = text
+          .replace(/^[^(]+\(/, '') // remove everything up to first (
+          .replace(/\);?\s*$/, ''); // remove trailing );
+
+        const data = JSON.parse(json);
+        const rows = data.table.rows;
+        const cols = data.table.cols;
+
+        // Find column indices by header label
+        function colIdx(label) {
+          return cols.findIndex(c =>
+            c.label && c.label.toLowerCase().replace(/\s/g,'') ===
+            label.toLowerCase().replace(/\s/g,'')
+          );
+        }
+
+        const dayIdx  = colIdx('day')     !== -1 ? colIdx('day')     :
+                        colIdx('nap')     !== -1 ? colIdx('nap')     : 0;
+        const levIdx  = colIdx('leves')   !== -1 ? colIdx('leves')   : 1;
+        const foIdx   = colIdx('főétel')  !== -1 ? colIdx('főétel')  :
+                        colIdx('foetel')  !== -1 ? colIdx('foetel')  : 2;
+        const desIdx  = colIdx('desszert') !== -1 ? colIdx('desszert'): 3;
+
+        const days = rows
+          .map(row => {
+            const c = row.c;
+            const name = c[dayIdx] && c[dayIdx].v ? normalizeDay(String(c[dayIdx].v)) : '';
+            if (!name) return null;
+            return {
+              name,
+              leves:   c[levIdx]  && c[levIdx].v  ? String(c[levIdx].v)  : '',
+              foetel:  c[foIdx]   && c[foIdx].v   ? String(c[foIdx].v)   : '',
+              dessert: c[desIdx]  && c[desIdx].v  ? String(c[desIdx].v)  : '',
+            };
+          })
+          .filter(Boolean);
+
+        if (days.length === 0) {
+          showError('A táblázatban nem találhatók adatok. Ellenőrizd az oszlopfejléceket.');
+          return;
+        }
+
+        renderMenu(days);
+      })
+      .catch(err => {
+        console.error('Menu fetch error:', err);
+        showError('A menü betöltése nem sikerült. Kérjük, próbálj újra később.<br><small style="opacity:0.6">' + err.message + '</small>');
+      });
+  }
+
+  function showNotConfigured() {
+    document.getElementById('menu-container').innerHTML = `
+      <div class="not-configured">
+        <h3>Menü hamarosan</h3>
+        <p>
+          A heti menü Google Sheets-ből töltődik be élőben.<br>
+          A beállításhoz illeszd be a táblázat azonosítóját a widget tetején lévő
+          <code>SHEET_ID</code> változóba.
+        </p>
+        <p style="margin-top:1rem">
+          <code>const SHEET_ID = "1BxiMVs0XRA…";</code>
+        </p>
+      </div>
+    `;
+  }
+
+  function showError(msg) {
+    document.getElementById('menu-container').innerHTML = `
+      <div class="error-state"><p>${msg}</p></div>
+    `;
+  }
+
+  /* ── Placeholder data (shown when SHEET_ID not set) ────── */
+  function renderPlaceholderMenu() {
+    renderMenu([
+      { name: 'Hétfő',    leves: 'Paradicsomleves friss bazsalikommal', foetel: 'Rántott csirkemell hasábburgonyával és tartármártással', dessert: 'Almás rétes vaníliasodóval' },
+      { name: 'Kedd',     leves: 'Gulyásleves galuská­val', foetel: 'Töltött paprika paradicsomos rizzsel', dessert: 'Túrógombóc tejföllel és baracklekvárral' },
+      { name: 'Szerda',   leves: 'Erdei gombaleves tejszínnel', foetel: 'Sertéspörkölt nokedlivel', dessert: 'Somlói galuska rum­­öntettel' },
+      { name: 'Csütörtök',leves: 'Húsleves zöldségekkel és cérnametélttel', foetel: 'Grillezett lazacfilé citromos burgonyapürével', dessert: 'Panna cotta eperszósszal' },
+      { name: 'Péntek',   leves: 'Zöldségkrémleves pirított magokkal', foetel: 'Harcsa paprikás tejfölös galuskával', dessert: 'Csokis brownie vaníliafagylalttal' },
+    ]);
+  }
+
+  /* ── Init ───────────────────────────────────────────────── */
+  fetchMenu();
+</script>
+
+</body>
+</html>

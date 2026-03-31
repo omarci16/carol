@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carol Gasztroműhely — Főzőiskola Debrecenben</title>
+  <meta name="description" content="Carol Gasztroműhely – főzőiskola, rendezvény helyszín és gasztronómiai workshop Debrecenben. Élményfőzés felnőtteknek és gyerekeknek, csapatépítő tréningek, előadások.">
+  <link rel="canonical" href="https://carol-gasztromuhely.hu">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+  <!-- ══ NAVIGATION ══════════════════════════════════════════ -->
+  <nav class="nav" id="nav" aria-label="Fő navigáció">
+    <div class="nav-inner">
+
+      <a href="#fooldal" class="nav-logo">
+        <img src="assets/images/logo.png" alt="Carol Gasztroműhely">
+      </a>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#rolunk">Rólunk</a></li>
+        <li><a href="#szolgaltatasok">Szolgáltatások</a></li>
+        <li><a href="#kurzusaink">Kurzusaink</a></li>
+        <li><a href="#heti-menu">Heti menü</a></li>
+        <li><a href="menu/alando-menu.html">Állandó menü</a></li>
+        <li><a href="#kapcsolat">Kapcsolat</a></li>
+      </ul>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menü megnyitása" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══ HERO ════════════════════════════════════════════════ -->
+    <section class="hero" id="fooldal" aria-label="Főoldal">
+      <div class="hero-watermark" aria-hidden="true">Carol</div>
+      <div class="hero-content">
+
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-line" aria-hidden="true"></span>
+          <span class="label">Debrecen, Böszörményi út 68</span>
+        </div>
+
+        <h1 class="hero-title">
+          Főzőiskola<br>
+          <span class="indent">&amp; <em>Gasztroműhely</em></span>
+        </h1>
+
+        <div class="hero-rule-wrap" aria-hidden="true">
+          <div class="hero-rule"></div>
+        </div>
+
+        <div class="hero-bottom">
+          <p class="hero-tagline">
+            <strong>Élményfőzés.</strong> Minőségi konyhaművészet.<br>
+            Felnőtteknek · Gyerekeknek · Csapatoknak
+          </p>
+          <div class="hero-actions">
+            <a href="#heti-menu" class="hero-btn hero-btn--filled">Heti menü</a>
+            <a href="menu/alando-menu.html" class="hero-btn hero-btn--outline">Állandó menü</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ ABOUT ════════════════════════════════════════════════ -->
+    <section class="about" id="rolunk" aria-label="Rólunk">
+      <div class="about-container">
+
+        <div class="about-header">
+          <span class="label reveal">Rólunk</span>
+        </div>
+
+        <div class="about-portrait-grid">
+          <div class="about-portrait-wrap reveal">
+            <img
+              src="assets/images/carolportrait.jpg"
+              alt="Rácz Karolina, a Carol Gasztroműhely alapítója"
+              loading="lazy"
+            >
+          </div>
+          <div class="about-text">
+            <h2 class="reveal">
+              <em>Rácz Karolina</em> vagyok,<br>a hely megálmodója
+            </h2>
+            <p class="about-lead reveal reveal-delay-1">
+              Debrecen szívében hoztam létre ezt a teret, ahol a főzés több mint
+              puszta konyhai tevékenység — élmény, közösség, alkotás. A Carol
+              Gasztroműhely az én álmom: egy hely, ahol mindenki otthonra talál
+              a tűzhely előtt.
+            </p>
+            <p class="about-body reveal reveal-delay-2">
+              Rendszeresen tartunk főzőkurzusokat felnőtteknek és gyerekeknek —
+              kezdőknek és haladóknak, húsevőknek és vegán életmódot folytatóknak.
+              Magas minősítéssel rendelkező séfjeink nemcsak főzni tanítanak:
+              megmutatják, hogyan válik egy fogás igazi élménnyé.
+            </p>
+            <p class="about-body reveal reveal-delay-3">
+              A Carol Art&amp;Cafe tere a gasztronómia, a művészet és a közösség
+              metszéspontján születik újra minden alkalommal — legyen szó
+              főzőiskoláról, csapatépítőről, kisebb esküvőről vagy szakmai előadásról.
+            </p>
+            <div class="about-divider reveal"></div>
+            <dl class="about-stats reveal">
+              <div class="stat"><dt>15–60</dt><dd>Fő / rendezvény</dd></div>
+              <div class="stat"><dt>4+</dt><dd>Szolgáltatás</dd></div>
+              <div class="stat"><dt>9–18</dt><dd>Naponta nyitva</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="about-gallery">
+          <div class="about-gallery-item reveal">
+            <img src="assets/images/carolinterior.jpg" alt="A Carol Gasztroműhely tere" loading="lazy">
+          </div>
+          <div class="about-gallery-item reveal reveal-delay-1">
+            <img src="assets/images/meal.jpg" alt="Fogásaink" loading="lazy">
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ SERVICES ═════════════════════════════════════════════ -->
+    <section class="services" id="szolgaltatasok" aria-label="Szolgáltatások">
+      <header class="services-header">
+        <span class="label" style="color: rgba(184,149,90,0.65);">Szolgáltatások</span>
+        <h2 class="services-title reveal">Amit kínálunk</h2>
+      </header>
+      <ul class="services-list" role="list">
+        <li class="service-item reveal">
+          <span class="service-num">01</span>
+          <div class="service-body">
+            <span class="service-name">Főzőkurzusok</span>
+            <span class="service-desc">Felnőtt és gyermek kurzusok · Kezdő és haladó szintek · Vegán workshopok</span>
+          </div>
+          <a href="#kapcsolat" class="service-cta">Érdeklődöm</a>
+        </li>
+        <li class="service-item reveal reveal-delay-1">
+          <span class="service-num">02</span>
+          <div class="service-body">
+            <span class="service-name">Rendezvény helyszín</span>
+            <span class="service-desc">15–60 fő · Születésnapok, névnapok, esküvők · Egyedi menük</span>
+          </div>
+          <a href="#kapcsolat" class="service-cta">Érdeklődöm</a>
+        </li>
+        <li class="service-item reveal reveal-delay-2">
+          <span class="service-num">03</span>
+          <div class="service-body">
+            <span class="service-name">Csapatépítő tréningek</span>
+            <span class="service-desc">Gasztronómiai csapatépítés · Oldott légkör · Közös főzés és étkezés</span>
+          </div>
+          <a href="#kapcsolat" class="service-cta">Érdeklődöm</a>
+        </li>
+        <li class="service-item reveal reveal-delay-3">
+          <span class="service-num">04</span>
+          <div class="service-body">
+            <span class="service-name">Előadások</span>
+            <span class="service-desc">Egészség · Pszichológia · Művészet · Belső építészet · Marketing</span>
+          </div>
+          <a href="#kapcsolat" class="service-cta">Érdeklődöm</a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ══ KURZUSAINK ═══════════════════════════════════════════ -->
+    <section class="kurzusok" id="kurzusaink" aria-label="Kurzusaink">
+
+      <header class="kurzusok-header">
+        <span class="label reveal">Kurzusaink</span>
+        <h2 class="reveal">Közelgő <em>kurzusaink</em></h2>
+        <p class="kurzusok-sub reveal reveal-delay-1">
+          Minden kurzus korlátozott létszámmal indul — foglald le helyedet időben.
+        </p>
+      </header>
+
+      <script>
+        const KURZUS_SHEET_ID   = '11J_PYoFihazIz1jFThlxFDGYWBv71cMYqSgbT6XCxfA';
+        const KURZUS_SHEET_NAME = 'Kurzusok'; // must match your exact tab name in Google Sheets
+      </script>
+
+      <div class="kurzusok-grid" id="kurzusok-grid">
+
+        <!-- Placeholder card 1 -->
+        <article class="kurzus-card reveal">
+          <div class="kurzus-image">
+            <div class="kurzus-image-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M24 10 C18 10 12 16 12 22 C12 30 24 40 24 40 C24 40 36 30 36 22 C36 16 30 10 24 10Z"/>
+                <circle cx="24" cy="22" r="4"/>
+              </svg>
+            </div>
+          </div>
+          <div class="kurzus-body">
+            <div class="kurzus-meta">
+              <span class="kurzus-datum">2025. február 15.</span>
+              <span class="kurzus-dot" aria-hidden="true">·</span>
+              <span class="kurzus-ido">3 óra</span>
+            </div>
+            <h3 class="kurzus-nev">Olasz Pasta Est</h3>
+            <p class="kurzus-leiras">
+              Fedezd fel az olasz konyha szívét! Kézzel készített friss tészta,
+              autentikus szószok és az igazi olasz vacsora élménye egy estén át.
+            </p>
+            <a href="#kapcsolat" class="kurzus-cta">Érdeklődöm</a>
+          </div>
+        </article>
+
+        <!-- Placeholder card 2 -->
+        <article class="kurzus-card reveal reveal-delay-1">
+          <div class="kurzus-image">
+            <div class="kurzus-image-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 34 L24 10 L38 34 Z"/>
+                <line x1="10" y1="34" x2="38" y2="34"/>
+                <circle cx="24" cy="22" r="3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="kurzus-body">
+            <div class="kurzus-meta">
+              <span class="kurzus-datum">2025. február 22.</span>
+              <span class="kurzus-dot" aria-hidden="true">·</span>
+              <span class="kurzus-ido">2.5 óra</span>
+            </div>
+            <h3 class="kurzus-nev">Gyermek Süti Szombat</h3>
+            <p class="kurzus-leiras">
+              Izgalmas sütős délelőtt 6–12 éves gyerekeknek. Keksz, muffin,
+              díszítés — és persze közös elfogyasztás a szülőkkel együtt.
+            </p>
+            <a href="#kapcsolat" class="kurzus-cta">Érdeklődöm</a>
+          </div>
+        </article>
+
+        <!-- Placeholder card 3 -->
+        <article class="kurzus-card reveal reveal-delay-2">
+          <div class="kurzus-image">
+            <div class="kurzus-image-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="12" y="12" width="24" height="24" rx="2"/>
+                <line x1="12" y1="24" x2="36" y2="24"/>
+                <line x1="24" y1="12" x2="24" y2="36"/>
+              </svg>
+            </div>
+          </div>
+          <div class="kurzus-body">
+            <div class="kurzus-meta">
+              <span class="kurzus-datum">2025. március 1.</span>
+              <span class="kurzus-dot" aria-hidden="true">·</span>
+              <span class="kurzus-ido">3.5 óra</span>
+            </div>
+            <h3 class="kurzus-nev">Vegán Konyha Workshop</h3>
+            <p class="kurzus-leiras">
+              Növényi alapú főzés, amely meglepően gazdag és ízletes. Megmutatjuk,
+              hogy a vegán konyha nem lemondás — hanem egy teljesen új ízvilág.
+            </p>
+            <a href="#kapcsolat" class="kurzus-cta">Érdeklődöm</a>
+          </div>
+        </article>
+
+        <!-- Placeholder card 4 -->
+        <article class="kurzus-card reveal reveal-delay-3">
+          <div class="kurzus-image">
+            <div class="kurzus-image-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="24" cy="24" r="14"/>
+                <path d="M24 14 L24 24 L32 28"/>
+              </svg>
+            </div>
+          </div>
+          <div class="kurzus-body">
+            <div class="kurzus-meta">
+              <span class="kurzus-datum">2025. március 8.</span>
+              <span class="kurzus-dot" aria-hidden="true">·</span>
+              <span class="kurzus-ido">4 óra</span>
+            </div>
+            <h3 class="kurzus-nev">Francia Alapok Mesterkurzus</h3>
+            <p class="kurzus-leiras">
+              A klasszikus francia konyha technikái: szószok, sültek, desszertek.
+              Egy délután, amely örökre megváltoztatja, ahogy főzésre gondolsz.
+            </p>
+            <a href="#kapcsolat" class="kurzus-cta">Érdeklődöm</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ══ AJÁNDÉKKÁRTYÁK ═════════════════════════════════════════ -->
+    <section class="ajandek" id="ajandekkartyak" aria-label="Ajándékkártyák">
+      <div class="ajandek-grid">
+
+        <div class="ajandek-text">
+          <span class="label">Ajándékkártyák</span>
+          <h2 class="reveal">Adj ajándékba<br><em>élményt</em></h2>
+          <p class="reveal reveal-delay-1">
+            Az ajándékkártya a legtökéletesebb meglepetés minden gasztronómia-rajongónak.
+            Válassz értéket, és add ajándékba a Carol Gasztroműhely élményét —
+            főzőkurzust, különleges vacsorát vagy workshopot.
+          </p>
+          <p class="reveal reveal-delay-2">
+            Ajándékkártyáink személyesen vásárolhatók meg a műhelyben,
+            vagy telefonon és e-mailben is megrendelhetők.
+          </p>
+          <a href="ajandekkartyak.html" class="ajandek-cta reveal reveal-delay-3">Megrendelem</a>
+        </div>
+
+        <div class="ajandek-image-slot reveal">
+          <!-- When gift card image is ready, replace this div with:
+               <img src="assets/images/ajandekkartyak.jpg" alt="Carol Gasztroműhely ajándékkártya"> -->
+          <div class="ajandek-placeholder">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="0.75"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="13" width="40" height="26" rx="3"/>
+              <line x1="4" y1="21" x2="44" y2="21"/>
+              <line x1="12" y1="30" x2="22" y2="30"/>
+              <line x1="12" y1="34" x2="17" y2="34"/>
+              <circle cx="36" cy="32" r="4"/>
+            </svg>
+            <span>Ajándékkártya</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ WEEKLY MENU ══════════════════════════════════════════ -->
+    <section class="menu-section" id="heti-menu" aria-label="Heti menü">
+      <header class="menu-header">
+        <span class="label reveal">Heti menü</span>
+        <h2 class="reveal">A hét <em>fogásai</em></h2>
+      </header>
+      <div class="menu-frame-wrap reveal">
+        <iframe src="menu/menu-widget.html" id="menu-iframe" title="Heti menü" loading="lazy" scrolling="no"></iframe>
+      </div>
+    </section>
+
+    <!-- ══ CAROL FANTASY ══════════════════════════════════════════ -->
+    <section class="carol-fantasy" id="carol-fantasy" aria-label="Carol Fantasy">
+      <div class="carol-fantasy-bg" aria-hidden="true"
+           style="background-image: url('assets/images/Gemini_Generated_Image_h8ffe6h8ffe6h8ff.png')">
+      </div>
+      <div class="carol-fantasy-overlay" aria-hidden="true"></div>
+      <div class="carol-fantasy-content">
+        <span class="label">Hamarosan</span>
+        <h2>Carol <em>Fantasy</em></h2>
+        <p>
+          Kézműves konyhai eszközök és prémium lakberendezési tárgyak.<br>
+          Egyedi belső építészet — ahol a szépség és a funkció találkozik.
+        </p>
+        <a href="#" class="carol-fantasy-btn" aria-label="Carol Fantasy — hamarosan nyílik">
+          Fedezd fel
+        </a>
+      </div>
+    </section>
+
+    <!-- ══ TESTIMONIALS ═════════════════════════════════════════ -->
+    <section class="testimonials" id="velemenyek" aria-label="Vendégeink mondták">
+      <div class="testimonials-header">
+        <span class="label reveal">Vendégeink mondták</span>
+        <h2 class="reveal">Valódi <em>élmények</em></h2>
+      </div>
+
+      <div class="testimonials-stage" aria-hidden="true">
+
+        <!-- Column A — scrolls up -->
+        <div class="testimonials-col testimonials-col--up">
+          <div class="testimonials-track">
+
+            <blockquote class="testi-card">
+              <p class="testi-quote">„Életem egyik legemlékezetesebb estéje. A séf türelme és tudása páratlan — mi tizenketten főztük meg a vacsoránkat, és minden falat tökéletes volt."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Kovács Éva</span>
+                <span class="testi-context">Olasz Pasta Est</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card">
+              <p class="testi-quote">„A csapatépítőnk teljesen más volt, mint bármi, amit előtte csináltunk. A közös főzés össze tudja hozni az embereket — ezt most már mi is tudjuk."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Molnár Péter</span>
+                <span class="testi-context">Csapatépítő tréning</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card">
+              <p class="testi-quote">„A lányom születésnapját itt ünnepeltük, és minden részlet gondosan előkészített volt. A tér gyönyörű, a hangulat meghitt, az ételek kiválóak."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Szabó Judit</span>
+                <span class="testi-context">Magánrendezvény</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card">
+              <p class="testi-quote">„Soha nem gondoltam volna, hogy a vegán főzés ilyen izgalmas lehet. A workshop után otthon is mertem kísérletezni — és sikerült!"</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Horváth Anna</span>
+                <span class="testi-context">Vegán Konyha Workshop</span>
+              </footer>
+            </blockquote>
+
+            <!-- Duplicate for seamless loop -->
+            <blockquote class="testi-card" aria-hidden="true">
+              <p class="testi-quote">„Életem egyik legemlékezetesebb estéje. A séf türelme és tudása páratlan — mi tizenketten főztük meg a vacsoránkat, és minden falat tökéletes volt."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Kovács Éva</span>
+                <span class="testi-context">Olasz Pasta Est</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card" aria-hidden="true">
+              <p class="testi-quote">„A csapatépítőnk teljesen más volt, mint bármi, amit előtte csináltunk. A közös főzés össze tudja hozni az embereket — ezt most már mi is tudjuk."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Molnár Péter</span>
+                <span class="testi-context">Csapatépítő tréning</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card" aria-hidden="true">
+              <p class="testi-quote">„A lányom születésnapját itt ünnepeltük, és minden részlet gondosan előkészített volt. A tér gyönyörű, a hangulat meghitt, az ételek kiválóak."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Szabó Judit</span>
+                <span class="testi-context">Magánrendezvény</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card" aria-hidden="true">
+              <p class="testi-quote">„Soha nem gondoltam volna, hogy a vegán főzés ilyen izgalmas lehet. A workshop után otthon is mertem kísérletezni — és sikerült!"</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Horváth Anna</span>
+                <span class="testi-context">Vegán Konyha Workshop</span>
+              </footer>
+            </blockquote>
+
+          </div>
+        </div>
+
+        <!-- Column B — scrolls down -->
+        <div class="testimonials-col testimonials-col--down">
+          <div class="testimonials-track">
+
+            <blockquote class="testi-card">
+              <p class="testi-quote">„Karolina és a csapata valami különlegeset alkotott Debrecenben. Nem csak főzni tanítanak — megmutatják, hogyan kell szeretni a jó ételt."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Nagy Bence</span>
+                <span class="testi-context">Francia Alapok Mesterkurzus</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card">
+              <p class="testi-quote">„A gyerekek imádták a sütős szombatot! Hazafelé az autóban még arról meséltek, mit főznek majd hétvégén otthon. Ez a legjobb visszajelzés."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Fekete Mónika</span>
+                <span class="testi-context">Gyermek Süti Szombat</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card">
+              <p class="testi-quote">„Az esküvőnk kis vacsoráját itt tartottuk — 30 főre. Minden tökéletes volt: a tér, az ételek, a hangulat. Köszönjük a különleges napot!"</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Tóth Borbála &amp; Márk</span>
+                <span class="testi-context">Kisesküvő</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card">
+              <p class="testi-quote">„A cég nevében mondom: jövőre is ide jövünk csapatépítőre. A kollégáim még hetek múlva is a főzős napot emlegetik az irodában."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Varga Tamás</span>
+                <span class="testi-context">Vállalati csapatépítő</span>
+              </footer>
+            </blockquote>
+
+            <!-- Duplicate for seamless loop -->
+            <blockquote class="testi-card" aria-hidden="true">
+              <p class="testi-quote">„Karolina és a csapata valami különlegeset alkotott Debrecenben. Nem csak főzni tanítanak — megmutatják, hogyan kell szeretni a jó ételt."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Nagy Bence</span>
+                <span class="testi-context">Francia Alapok Mesterkurzus</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card" aria-hidden="true">
+              <p class="testi-quote">„A gyerekek imádták a sütős szombatot! Hazafelé az autóban még arról meséltek, mit főznek majd hétvégén otthon. Ez a legjobb visszajelzés."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Fekete Mónika</span>
+                <span class="testi-context">Gyermek Süti Szombat</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card" aria-hidden="true">
+              <p class="testi-quote">„Az esküvőnk kis vacsoráját itt tartottuk — 30 főre. Minden tökéletes volt: a tér, az ételek, a hangulat. Köszönjük a különleges napot!"</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Tóth Borbála &amp; Márk</span>
+                <span class="testi-context">Kisesküvő</span>
+              </footer>
+            </blockquote>
+
+            <blockquote class="testi-card" aria-hidden="true">
+              <p class="testi-quote">„A cég nevében mondom: jövőre is ide jövünk csapatépítőre. A kollégáim még hetek múlva is a főzős napot emlegetik az irodában."</p>
+              <footer class="testi-footer">
+                <span class="testi-name">Varga Tamás</span>
+                <span class="testi-context">Vállalati csapatépítő</span>
+              </footer>
+            </blockquote>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ CONTACT ══════════════════════════════════════════════ -->
+    <section class="contact" id="kapcsolat" aria-label="Kapcsolat">
+      <div class="contact-grid">
+
+        <div class="contact-left">
+          <span class="label" style="color: rgba(184,149,90,0.65);">Kapcsolat</span>
+          <h2 class="reveal">Találkozzunk<br><em>Debrecenben</em></h2>
+
+          <dl class="contact-details">
+            <div class="contact-row reveal">
+              <dt class="contact-row-label">Cím</dt>
+              <dd class="contact-row-value">
+                4032 Debrecen, Böszörményi út 68.<br>
+                <small style="opacity:0.45; font-size:0.8125rem;">Carol Art&amp;Cafe</small>
+              </dd>
+            </div>
+            <div class="contact-row reveal reveal-delay-1">
+              <dt class="contact-row-label">Nyitvatartás</dt>
+              <dd class="contact-row-value">Mindennap · 09:30 – 18:30</dd>
+            </div>
+            <div class="contact-row reveal reveal-delay-2">
+              <dt class="contact-row-label">Telefon</dt>
+              <dd class="contact-row-value">
+                <a href="tel:+36705286308">+36 70 528 6308</a>
+              </dd>
+            </div>
+            <div class="contact-row reveal reveal-delay-3">
+              <dt class="contact-row-label">E-mail</dt>
+              <dd class="contact-row-value">
+                <a href="mailto:carol@carolfantasy.hu">carol@carolfantasy.hu</a>
+              </dd>
+            </div>
+          </dl>
+
+          <div class="contact-social reveal">
+            <span class="contact-social-label label">Kövess minket</span>
+            <div class="social-links">
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="20" rx="5.5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+                <span>Instagram</span>
+              </a>
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+                <span>Facebook</span>
+              </a>
+              <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.74a8.18 8.18 0 0 0 4.79 1.53V6.82a4.85 4.85 0 0 1-1.02-.13z"/>
+                </svg>
+                <span>TikTok</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-map reveal">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2694.4!2d21.6135!3d47.5362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47470e6a0000000%3A0x0!2sBöszörményi+út+68%2C+Debrecen%2C+4032!5e0!3m2!1shu!2shu!4v1"
+            loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+            title="Carol Gasztroműhely térképen"
+          ></iframe>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════════ -->
+  <footer class="footer" aria-label="Lábléc">
+    <div class="footer-inner">
+
+      <a href="#fooldal" class="footer-logo">
+        <img src="assets/images/logo.png" alt="Carol Gasztroműhely">
+      </a>
+
+      <ul class="footer-links" role="list">
+        <li><a href="#rolunk">Rólunk</a></li>
+        <li><a href="#kurzusaink">Kurzusaink</a></li>
+        <li><a href="#heti-menu">Heti menü</a></li>
+        <li><a href="menu/alando-menu.html">Állandó menü</a></li>
+        <li><a href="/gdpr">Adatvédelem</a></li>
+      </ul>
+
+      <p class="footer-copy">&copy; 2024 Carol Gasztroműhely</p>
+
+    </div>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

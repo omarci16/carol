@@ -1,0 +1,60 @@
+/* ============================================================
+   Carol Gasztroműhely — Design Tokens
+   Source: Brand guidelines (Figma export)
+   Last updated: 2026-03-30
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  /* ── Colors ─────────────────────────────────────────────── */
+  --color-bg:        #F5F0E8;   /* Cream / linen — primary background */
+  --color-text:      #1C1A17;   /* Charcoal — all body text & headings */
+  --color-accent:    #B8955A;   /* Warm gold — CTAs, borders, highlights */
+  --color-bg-dark:   #1C1A17;   /* Dark sections — inverted panels */
+  --color-text-dark: #F5F0E8;   /* Text on dark backgrounds */
+  --color-accent-light: #D4B483; /* Lighter gold for hover states */
+  --color-rule:      rgba(28, 26, 23, 0.15); /* Hairline dividers */
+
+  /* ── Fonts ──────────────────────────────────────────────── */
+  --font-heading:    'Cormorant Garamond', Georgia, serif;
+  --font-body:       'Inter', system-ui, sans-serif;
+
+  /* ── Type Scale ─────────────────────────────────────────── */
+  --text-display:    clamp(3.5rem, 8vw, 6rem);
+  --text-h1:         clamp(2.5rem, 5vw, 4rem);
+  --text-h2:         clamp(1.875rem, 3.5vw, 3rem);
+  --text-h3:         clamp(1.5rem, 2.5vw, 2rem);
+  --text-body:       1rem;
+  --text-small:      0.8125rem;  /* 13px */
+  --text-label:      0.75rem;    /* 12px — uppercase labels */
+
+  /* ── Spacing ────────────────────────────────────────────── */
+  --space-xs:        0.5rem;     /* 8px */
+  --space-sm:        1rem;       /* 16px */
+  --space-md:        2rem;       /* 32px */
+  --space-lg:        4rem;       /* 64px */
+  --space-xl:        6rem;       /* 96px */
+  --space-2xl:       8rem;       /* 128px */
+
+  /* ── Border Radius ──────────────────────────────────────── */
+  --radius-sm:       2px;
+  --radius-md:       4px;
+  --radius-none:     0;
+
+  /* ── Shadows ────────────────────────────────────────────── */
+  --shadow-subtle:   0 2px 16px rgba(28, 26, 23, 0.06);
+  --shadow-card:     0 4px 32px rgba(28, 26, 23, 0.08);
+
+  /* ── Transitions ────────────────────────────────────────── */
+  --ease-out:        cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:   150ms;
+  --duration-base:   300ms;
+  --duration-slow:   600ms;
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  --max-width:       1200px;
+  --max-width-text:  680px;
+  --nav-height:      72px;
+}

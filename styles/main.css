@@ -52,6 +52,8 @@ body {
   display: flex;
   align-items: center;
   padding: 0 var(--space-md);
+  /* Desktop: starts transparent, fills in on scroll */
+  background: transparent;
   transition: background var(--duration-slow) var(--ease-out),
               box-shadow var(--duration-slow) var(--ease-out);
 }
@@ -60,6 +62,16 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 var(--color-rule);
+}
+
+/* Mobile: ALWAYS opaque — hamburger must be visible everywhere */
+@media (max-width: 768px) {
+  .nav {
+    background: rgba(245, 240, 232, 0.97) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--color-rule);
+  }
 }
 
 .nav-inner {
@@ -1030,14 +1042,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* Always show background on mobile — no transparent nav */
-  .nav {
-    background: rgba(245, 240, 232, 0.97);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 1px 0 var(--color-rule);
-  }
-
   .nav-links {
     position: fixed;
     inset: 0;

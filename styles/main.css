@@ -66,14 +66,7 @@ body {
   color: var(--color-text);
   box-shadow: 0 1px 0 var(--color-rule);
 }
-/* Mobile: opaque */
-@media (max-width: 768px) {
-  .nav {
-    background: rgba(245, 240, 232, 0.97);
-    color: var(--color-text);
-    box-shadow: 0 1px 0 var(--color-rule);
-  }
-}
+/* Mobile: same transparent→scrolled behaviour as desktop (no override here) */
 
 .nav-inner {
   width: 100%;
@@ -146,6 +139,48 @@ body {
 .nav.scrolled .nav-toggle span {
   background: var(--color-text);
 }
+
+/* ── Language switch ──────────────────────────────────────── */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+.lang-btn {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 5px;
+  color: inherit;
+  opacity: 0.38;
+  transition: opacity var(--duration-fast), color var(--duration-fast);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.lang-btn.active {
+  opacity: 1;
+  color: var(--color-accent);
+}
+.lang-btn:hover:not(.active) { opacity: 0.7; }
+.lang-sep {
+  font-size: 0.5rem;
+  opacity: 0.18;
+  user-select: none;
+  padding: 0 1px;
+}
+/* On transparent (hero) nav: white */
+.nav:not(.scrolled) .lang-btn { color: white; }
+.nav:not(.scrolled) .lang-btn.active { color: var(--color-accent); }
+/* On scrolled nav: dark */
+.nav.scrolled .lang-btn { color: var(--color-text); }
+.nav.scrolled .lang-btn.active { color: var(--color-accent); }
+
+/* Mobile: desktop switch hidden, mobile switch shown in overlay */
+.nav-lang-mobile { display: none; }
 
 /* ── Hero ─────────────────────────────────────────────────── */
 .hero {
@@ -1105,21 +1140,89 @@ body {
 }
 
 @media (max-width: 768px) {
+  /* ── Mobile full-screen nav overlay ──────────────────────── */
   .nav-links {
     position: fixed;
     inset: 0;
-    background: var(--color-bg);
+    background: var(--color-bg-dark);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: var(--space-lg);
+    gap: 0.25rem;
     transform: translateX(100%);
-    transition: transform var(--duration-base) var(--ease-out);
+    transition: transform 0.55s var(--ease-out);
     z-index: 200;
+    visibility: hidden;
+    pointer-events: none;
+    padding-bottom: 6rem; /* room for lang switch */
   }
-  .nav-links.open { transform: translateX(0); }
-  .nav-links a { font-size: 1.125rem; letter-spacing: 0.08em; }
+  .nav-links.open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+  /* Cormorant Garamond nav links */
+  .nav-links > li > a {
+    font-family: var(--font-heading) !important;
+    font-size: clamp(2.25rem, 9vw, 3rem) !important;
+    font-weight: 300 !important;
+    letter-spacing: -0.015em !important;
+    line-height: 1.1 !important;
+    color: rgba(245, 240, 232, 0.85) !important;
+    padding: 0.6rem 0 !important;
+    display: block;
+    white-space: nowrap;
+    transition: color var(--duration-base) !important;
+  }
+  .nav-links > li > a:hover { color: var(--color-accent) !important; }
+  .nav-links > li > a::after { display: none !important; }
+  /* Decorative rule above the link list */
+  .nav-links::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--color-accent);
+    margin-bottom: 2rem;
+    opacity: 0.6;
+  }
+  /* Mobile lang switch — shown at the bottom of the overlay */
+  .nav-lang-mobile {
+    display: block;
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .nav-lang-mobile .lang-btn {
+    font-size: 0.6875rem !important;
+    color: rgba(245, 240, 232, 0.4) !important;
+    padding: 8px 8px !important;
+    opacity: 1 !important;
+    letter-spacing: 0.18em !important;
+  }
+  .nav-lang-mobile .lang-btn.active {
+    color: var(--color-accent) !important;
+  }
+  .nav-lang-mobile .lang-btn:hover:not(.active) {
+    color: rgba(245, 240, 232, 0.7) !important;
+  }
+  .nav-lang-mobile .lang-sep {
+    color: rgba(245, 240, 232, 0.18) !important;
+  }
+  /* Desktop lang switch hidden on mobile */
+  .lang-switch--desktop { display: none !important; }
+  /* Hamburger toggle */
   .nav-toggle { display: flex; z-index: 210; }
+  /* Hamburger lines: white on transparent hero, dark on scrolled */
+  /* When overlay open: always cream (dark bg behind them) */
+  .nav-toggle[aria-expanded="true"] span {
+    background: var(--color-text-dark) !important;
+  }
+  /* Force link colours regardless of .nav.scrolled */
+  .nav.scrolled .nav-links > li > a {
+    color: rgba(245, 240, 232, 0.85) !important;
+  }
 
   .hero { padding: calc(var(--nav-height) + 1.5rem) var(--space-sm) 2.5rem; }
 

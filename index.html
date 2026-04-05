@@ -20,13 +20,28 @@
       </a>
 
       <ul class="nav-links" id="nav-links" role="list">
-        <li><a href="#rolunk">Rólunk</a></li>
-        <li><a href="#szolgaltatasok">Szolgáltatások</a></li>
-        <li><a href="#kurzusaink">Kurzusaink</a></li>
-        <li><a href="#heti-menu">Heti menü</a></li>
-        <li><a href="menu/alando-menu.html">Állandó menü</a></li>
-        <li><a href="#kapcsolat">Kapcsolat</a></li>
+        <li><a href="#rolunk" data-t="nav-about">Rólunk</a></li>
+        <li><a href="#szolgaltatasok" data-t="nav-services">Szolgáltatások</a></li>
+        <li><a href="#kurzusaink" data-t="nav-courses">Kurzusaink</a></li>
+        <li><a href="#heti-menu" data-t="nav-menu">Heti menü</a></li>
+        <li><a href="menu/alando-menu.html" data-t="nav-alacarte">Állandó menü</a></li>
+        <li><a href="#kapcsolat" data-t="nav-contact">Kapcsolat</a></li>
+        <!-- Mobile-only language switch (shown inside the overlay) -->
+        <li class="nav-lang-mobile" role="none">
+          <div class="lang-switch">
+            <button class="lang-btn active" data-lang="hu">HU</button>
+            <span class="lang-sep" aria-hidden="true">/</span>
+            <button class="lang-btn" data-lang="en">EN</button>
+          </div>
+        </li>
       </ul>
+
+      <!-- Desktop language switch -->
+      <div class="lang-switch lang-switch--desktop">
+        <button class="lang-btn active" data-lang="hu">HU</button>
+        <span class="lang-sep" aria-hidden="true">/</span>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
 
       <button class="nav-toggle" id="nav-toggle" aria-label="Menü megnyitása" aria-expanded="false">
         <span></span>
@@ -48,7 +63,7 @@
           <span class="label">Debrecen, Böszörményi út 68</span>
         </div>
 
-        <h1 class="hero-title">
+        <h1 class="hero-title" data-t="hero-title">
           Főzőiskola<br>
           <span class="indent">&amp; <em>Gasztroműhely</em></span>
         </h1>
@@ -58,13 +73,13 @@
         </div>
 
         <div class="hero-bottom">
-          <p class="hero-tagline">
+          <p class="hero-tagline" data-t="hero-tagline">
             <strong>Élményfőzés.</strong> Minőségi konyhaművészet.<br>
             Felnőtteknek · Gyerekeknek · Csapatoknak
           </p>
           <div class="hero-actions">
-            <a href="#heti-menu" class="hero-btn hero-btn--filled">Heti menü</a>
-            <a href="menu/alando-menu.html" class="hero-btn hero-btn--outline">Állandó menü</a>
+            <a href="#heti-menu" class="hero-btn hero-btn--filled" data-t="hero-btn1">Heti menü</a>
+            <a href="menu/alando-menu.html" class="hero-btn hero-btn--outline" data-t="hero-btn2">Állandó menü</a>
           </div>
         </div>
 
@@ -76,7 +91,7 @@
       <div class="about-container">
 
         <div class="about-header">
-          <span class="label reveal">Rólunk</span>
+          <span class="label reveal" data-t="label-about">Rólunk</span>
         </div>
 
         <div class="about-portrait-grid">
@@ -88,31 +103,31 @@
             >
           </div>
           <div class="about-text">
-            <h2 class="reveal">
+            <h2 class="reveal" data-t="about-h2">
               <em>Rácz Karolina</em> vagyok,<br>a hely megálmodója
             </h2>
-            <p class="about-lead reveal reveal-delay-1">
+            <p class="about-lead reveal reveal-delay-1" data-t="about-lead">
               Debrecen szívében hoztam létre ezt a teret, ahol a főzés több mint
               puszta konyhai tevékenység — élmény, közösség, alkotás. A Carol
               Gasztroműhely az én álmom: egy hely, ahol mindenki otthonra talál
               a tűzhely előtt.
             </p>
-            <p class="about-body reveal reveal-delay-2">
+            <p class="about-body reveal reveal-delay-2" data-t="about-p2">
               Rendszeresen tartunk főzőkurzusokat felnőtteknek és gyerekeknek —
               kezdőknek és haladóknak, húsevőknek és vegán életmódot folytatóknak.
               Magas minősítéssel rendelkező séfjeink nemcsak főzni tanítanak:
               megmutatják, hogyan válik egy fogás igazi élménnyé.
             </p>
-            <p class="about-body reveal reveal-delay-3">
+            <p class="about-body reveal reveal-delay-3" data-t="about-p3">
               A Carol Art&amp;Cafe tere a gasztronómia, a művészet és a közösség
               metszéspontján születik újra minden alkalommal — legyen szó
               főzőiskoláról, csapatépítőről, kisebb esküvőről vagy szakmai előadásról.
             </p>
             <div class="about-divider reveal"></div>
             <dl class="about-stats reveal">
-              <div class="stat"><dt>15–60</dt><dd>Fő / rendezvény</dd></div>
-              <div class="stat"><dt>4+</dt><dd>Szolgáltatás</dd></div>
-              <div class="stat"><dt>9–18</dt><dd>Naponta nyitva</dd></div>
+              <div class="stat"><dt>15–60</dt><dd data-t="stat-1">Fő / rendezvény</dd></div>
+              <div class="stat"><dt>4+</dt><dd data-t="stat-2">Szolgáltatás</dd></div>
+              <div class="stat"><dt>9–18</dt><dd data-t="stat-3">Naponta nyitva</dd></div>
             </dl>
           </div>
         </div>
@@ -132,41 +147,41 @@
     <!-- ══ SERVICES ═════════════════════════════════════════════ -->
     <section class="services" id="szolgaltatasok" aria-label="Szolgáltatások">
       <header class="services-header">
-        <span class="label" style="color: rgba(184,149,90,0.65);">Szolgáltatások</span>
-        <h2 class="services-title reveal">Amit kínálunk</h2>
+        <span class="label" style="color: rgba(184,149,90,0.65);" data-t="label-services">Szolgáltatások</span>
+        <h2 class="services-title reveal" data-t="services-h2">Amit kínálunk</h2>
       </header>
       <ul class="services-list" role="list">
         <li class="service-item reveal">
           <span class="service-num">01</span>
           <div class="service-body">
-            <span class="service-name">Főzőkurzusok</span>
-            <span class="service-desc">Felnőtt és gyermek kurzusok · Kezdő és haladó szintek · Vegán workshopok</span>
+            <span class="service-name" data-t="s1-name">Főzőkurzusok</span>
+            <span class="service-desc" data-t="s1-desc">Felnőtt és gyermek kurzusok · Kezdő és haladó szintek · Vegán workshopok</span>
           </div>
-          <a href="#kapcsolat" class="service-cta">Érdeklődöm</a>
+          <a href="#kapcsolat" class="service-cta" data-t="service-cta">Érdeklődöm</a>
         </li>
         <li class="service-item reveal reveal-delay-1">
           <span class="service-num">02</span>
           <div class="service-body">
-            <span class="service-name">Rendezvény helyszín</span>
-            <span class="service-desc">15–60 fő · Születésnapok, névnapok, esküvők · Egyedi menük</span>
+            <span class="service-name" data-t="s2-name">Rendezvény helyszín</span>
+            <span class="service-desc" data-t="s2-desc">15–60 fő · Születésnapok, névnapok, esküvők · Egyedi menük</span>
           </div>
-          <a href="#kapcsolat" class="service-cta">Érdeklődöm</a>
+          <a href="#kapcsolat" class="service-cta" data-t="service-cta">Érdeklődöm</a>
         </li>
         <li class="service-item reveal reveal-delay-2">
           <span class="service-num">03</span>
           <div class="service-body">
-            <span class="service-name">Csapatépítő tréningek</span>
-            <span class="service-desc">Gasztronómiai csapatépítés · Oldott légkör · Közös főzés és étkezés</span>
+            <span class="service-name" data-t="s3-name">Csapatépítő tréningek</span>
+            <span class="service-desc" data-t="s3-desc">Gasztronómiai csapatépítés · Oldott légkör · Közös főzés és étkezés</span>
           </div>
-          <a href="#kapcsolat" class="service-cta">Érdeklődöm</a>
+          <a href="#kapcsolat" class="service-cta" data-t="service-cta">Érdeklődöm</a>
         </li>
         <li class="service-item reveal reveal-delay-3">
           <span class="service-num">04</span>
           <div class="service-body">
-            <span class="service-name">Előadások</span>
-            <span class="service-desc">Egészség · Pszichológia · Művészet · Belső építészet · Marketing</span>
+            <span class="service-name" data-t="s4-name">Előadások</span>
+            <span class="service-desc" data-t="s4-desc">Egészség · Pszichológia · Művészet · Belső építészet · Marketing</span>
           </div>
-          <a href="#kapcsolat" class="service-cta">Érdeklődöm</a>
+          <a href="#kapcsolat" class="service-cta" data-t="service-cta">Érdeklődöm</a>
         </li>
       </ul>
     </section>
@@ -175,9 +190,9 @@
     <section class="kurzusok" id="kurzusaink" aria-label="Kurzusaink">
 
       <header class="kurzusok-header">
-        <span class="label reveal">Kurzusaink</span>
-        <h2 class="reveal">Közelgő <em>kurzusaink</em></h2>
-        <p class="kurzusok-sub reveal reveal-delay-1">
+        <span class="label reveal" data-t="label-courses">Kurzusaink</span>
+        <h2 class="reveal" data-t="courses-h2">Közelgő <em>kurzusaink</em></h2>
+        <p class="kurzusok-sub reveal reveal-delay-1" data-t="courses-sub">
           Minden kurzus korlátozott létszámmal indul — foglald le helyedet időben.
         </p>
       </header>
@@ -205,7 +220,7 @@
               Fedezd fel az olasz konyha szívét! Kézzel készített friss tészta,
               autentikus szószok és az igazi olasz vacsora élménye egy estén át.
             </p>
-            <a href="#kapcsolat" class="kurzus-cta">Érdeklődöm</a>
+            <a href="#kapcsolat" class="kurzus-cta" data-t="service-cta">Érdeklődöm</a>
           </div>
         </article>
 
@@ -225,7 +240,7 @@
               Izgalmas sütős délelőtt 6–12 éves gyerekeknek. Keksz, muffin,
               díszítés — és persze közös elfogyasztás a szülőkkel együtt.
             </p>
-            <a href="#kapcsolat" class="kurzus-cta">Érdeklődöm</a>
+            <a href="#kapcsolat" class="kurzus-cta" data-t="service-cta">Érdeklődöm</a>
           </div>
         </article>
 
@@ -245,7 +260,7 @@
               Növényi alapú főzés, amely meglepően gazdag és ízletes. Megmutatjuk,
               hogy a vegán konyha nem lemondás — hanem egy teljesen új ízvilág.
             </p>
-            <a href="#kapcsolat" class="kurzus-cta">Érdeklődöm</a>
+            <a href="#kapcsolat" class="kurzus-cta" data-t="service-cta">Érdeklődöm</a>
           </div>
         </article>
 
@@ -265,7 +280,7 @@
               A klasszikus francia konyha technikái: szószok, sültek, desszertek.
               Egy délután, amely örökre megváltoztatja, ahogy főzésre gondolsz.
             </p>
-            <a href="#kapcsolat" class="kurzus-cta">Érdeklődöm</a>
+            <a href="#kapcsolat" class="kurzus-cta" data-t="service-cta">Érdeklődöm</a>
           </div>
         </article>
 
@@ -277,34 +292,22 @@
       <div class="ajandek-grid">
 
         <div class="ajandek-text">
-          <span class="label">Ajándékkártyák</span>
-          <h2 class="reveal">Adj ajándékba<br><em>élményt</em></h2>
-          <p class="reveal reveal-delay-1">
+          <span class="label" data-t="label-gift">Ajándékkártyák</span>
+          <h2 class="reveal" data-t="gift-h2">Adj ajándékba<br><em>élményt</em></h2>
+          <p class="reveal reveal-delay-1" data-t="gift-p1">
             Az ajándékkártya a legtökéletesebb meglepetés minden gasztronómia-rajongónak.
             Válassz értéket, és add ajándékba a Carol Gasztroműhely élményét —
             főzőkurzust, különleges vacsorát vagy workshopot.
           </p>
-          <p class="reveal reveal-delay-2">
+          <p class="reveal reveal-delay-2" data-t="gift-p2">
             Ajándékkártyáink személyesen vásárolhatók meg a műhelyben,
             vagy telefonon és e-mailben is megrendelhetők.
           </p>
-          <a href="ajandekkartyak.html" class="ajandek-cta reveal reveal-delay-3">Megrendelem</a>
+          <a href="ajandekkartyak.html" class="ajandek-cta reveal reveal-delay-3" data-t="gift-cta">Megrendelem</a>
         </div>
 
         <div class="ajandek-image-slot reveal">
-          <!-- When gift card image is ready, replace this div with:
-               <img src="assets/images/ajandekkartyak.jpg" alt="Carol Gasztroműhely ajándékkártya"> -->
-          <div class="ajandek-placeholder">
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="0.75"
-                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="4" y="13" width="40" height="26" rx="3"/>
-              <line x1="4" y1="21" x2="44" y2="21"/>
-              <line x1="12" y1="30" x2="22" y2="30"/>
-              <line x1="12" y1="34" x2="17" y2="34"/>
-              <circle cx="36" cy="32" r="4"/>
-            </svg>
-            <span>Ajándékkártya</span>
-          </div>
+          <img src="assets/images/giftcards.JPG" alt="Carol Gasztroműhely ajándékkártya">
         </div>
 
       </div>
@@ -313,8 +316,8 @@
     <!-- ══ WEEKLY MENU ══════════════════════════════════════════ -->
     <section class="menu-section" id="heti-menu" aria-label="Heti menü">
       <header class="menu-header">
-        <span class="label reveal">Heti menü</span>
-        <h2 class="reveal">A hét <em>fogásai</em></h2>
+        <span class="label reveal" data-t="label-menu-s">Heti menü</span>
+        <h2 class="reveal" data-t="menu-h2">A hét <em>fogásai</em></h2>
       </header>
       <div class="menu-frame-wrap reveal">
         <iframe src="menu/menu-widget.html" id="menu-iframe" title="Heti menü" loading="lazy" scrolling="no"></iframe>
@@ -328,13 +331,13 @@
       </div>
       <div class="carol-fantasy-overlay" aria-hidden="true"></div>
       <div class="carol-fantasy-content">
-        <span class="label">Hamarosan</span>
-        <h2>Carol <em>Fantasy</em></h2>
-        <p>
+        <span class="label" data-t="label-fantasy">Hamarosan</span>
+        <h2 data-t="fantasy-h2">Carol <em>Fantasy</em></h2>
+        <p data-t="fantasy-p">
           Kézműves konyhai eszközök és prémium lakberendezési tárgyak.<br>
           Egyedi belső építészet — ahol a szépség és a funkció találkozik.
         </p>
-        <a href="#" class="carol-fantasy-btn" aria-label="Carol Fantasy — hamarosan nyílik">
+        <a href="#" class="carol-fantasy-btn" data-t="fantasy-btn">
           Fedezd fel
         </a>
       </div>
@@ -343,8 +346,8 @@
     <!-- ══ TESTIMONIALS ═════════════════════════════════════════ -->
     <section class="testimonials" id="velemenyek" aria-label="Vendégeink mondták">
       <div class="testimonials-header">
-        <span class="label reveal">Vendégeink mondták</span>
-        <h2 class="reveal">Valódi <em>élmények</em></h2>
+        <span class="label reveal" data-t="label-testi">Vendégeink mondták</span>
+        <h2 class="reveal" data-t="testi-h2">Valódi <em>élmények</em></h2>
       </div>
 
       <div class="testimonials-stage" aria-hidden="true">
@@ -501,29 +504,29 @@
       <div class="contact-grid">
 
         <div class="contact-left">
-          <span class="label" style="color: rgba(184,149,90,0.65);">Kapcsolat</span>
-          <h2 class="reveal">Találkozzunk<br><em>Debrecenben</em></h2>
+          <span class="label" style="color: rgba(184,149,90,0.65);" data-t="label-contact">Kapcsolat</span>
+          <h2 class="reveal" data-t="contact-h2">Találkozzunk<br><em>Debrecenben</em></h2>
 
           <dl class="contact-details">
             <div class="contact-row reveal">
-              <dt class="contact-row-label">Cím</dt>
+              <dt class="contact-row-label" data-t="contact-addr">Cím</dt>
               <dd class="contact-row-value">
                 4032 Debrecen, Böszörményi út 68.<br>
                 <small style="opacity:0.45; font-size:0.8125rem;">Carol Art&amp;Cafe</small>
               </dd>
             </div>
             <div class="contact-row reveal reveal-delay-1">
-              <dt class="contact-row-label">Nyitvatartás</dt>
-              <dd class="contact-row-value">Mindennap · 09:30 – 18:30</dd>
+              <dt class="contact-row-label" data-t="contact-hours-l">Nyitvatartás</dt>
+              <dd class="contact-row-value" data-t="contact-hours-v">Mindennap · 09:30 – 18:30</dd>
             </div>
             <div class="contact-row reveal reveal-delay-2">
-              <dt class="contact-row-label">Telefon</dt>
+              <dt class="contact-row-label" data-t="contact-phone-l">Telefon</dt>
               <dd class="contact-row-value">
                 <a href="tel:+36705286308">+36 70 528 6308</a>
               </dd>
             </div>
             <div class="contact-row reveal reveal-delay-3">
-              <dt class="contact-row-label">E-mail</dt>
+              <dt class="contact-row-label" data-t="contact-email-l">E-mail</dt>
               <dd class="contact-row-value">
                 <a href="mailto:carol@carolfantasy.hu">carol@carolfantasy.hu</a>
               </dd>
@@ -531,7 +534,7 @@
           </dl>
 
           <div class="contact-social reveal">
-            <span class="contact-social-label label">Kövess minket</span>
+            <span class="contact-social-label label" data-t="contact-social">Kövess minket</span>
             <div class="social-links">
               <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -579,11 +582,11 @@
       </a>
 
       <ul class="footer-links" role="list">
-        <li><a href="#rolunk">Rólunk</a></li>
-        <li><a href="#kurzusaink">Kurzusaink</a></li>
-        <li><a href="#heti-menu">Heti menü</a></li>
-        <li><a href="menu/alando-menu.html">Állandó menü</a></li>
-        <li><a href="/gdpr">Adatvédelem</a></li>
+        <li><a href="#rolunk" data-t="footer-about">Rólunk</a></li>
+        <li><a href="#kurzusaink" data-t="footer-courses">Kurzusaink</a></li>
+        <li><a href="#heti-menu" data-t="footer-menu">Heti menü</a></li>
+        <li><a href="menu/alando-menu.html" data-t="footer-alacarte">Állandó menü</a></li>
+        <li><a href="/gdpr" data-t="footer-privacy">Adatvédelem</a></li>
       </ul>
 
       <p class="footer-copy">&copy; 2024 Carol Gasztroműhely</p>

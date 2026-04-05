@@ -14,6 +14,7 @@
       'nav-courses':     'Kurzusaink',
       'nav-menu':        'Heti menü',
       'nav-alacarte':    'Állandó menü',
+      'nav-diary':       'Carol Naplója',
       'nav-contact':     'Kapcsolat',
       // Hero
       'hero-title':      'Főzőiskola<br><span class="indent">&amp; <em>Gasztroműhely</em></span>',
@@ -85,6 +86,7 @@
       'nav-courses':     'Courses',
       'nav-menu':        'Weekly Menu',
       'nav-alacarte':    'À La Carte',
+      'nav-diary':       'Carol\'s Diary',
       'nav-contact':     'Contact',
       // Hero
       'hero-title':      'Cooking School<br><span class="indent">&amp; <em>Gastro Workshop</em></span>',

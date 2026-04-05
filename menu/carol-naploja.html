@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carol Naplója — Carol Gasztroműhely</title>
+  <meta name="description" content="Carol Gasztroműhely naplója. Receptek, műhelytitkok és debreceni gasztronómiai történetek Carol konyhájából.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Tokens ──────────────────────────────────────────── */
+    :root {
+      --color-bg:       #F5F0E8;
+      --color-text:     #1C1A17;
+      --color-accent:   #B8955A;
+      --color-bg-dark:  #1C1A17;
+      --color-text-dark:#F5F0E8;
+      --color-rule:     rgba(28, 26, 23, 0.12);
+      --font-heading:   'Cormorant Garamond', Georgia, serif;
+      --font-body:      'Inter', system-ui, sans-serif;
+      --max-width:      1200px;
+      --nav-height:     72px;
+      --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ── Reset ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Navigation ──────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      background: rgba(245, 240, 232, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-rule);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .nav-logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+      transition: opacity 150ms;
+    }
+    .nav-logo:hover img { opacity: 0.8; }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.45);
+      transition: color 150ms;
+    }
+    .nav-back:hover { color: var(--color-accent); }
+    .nav-back svg { width: 14px; height: 14px; }
+
+    /* ── Page header ─────────────────────────────────────── */
+    .page-header {
+      padding: 5rem 2rem 4rem;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      border-bottom: 1px solid var(--color-rule);
+    }
+
+    .page-header-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .page-header-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--color-accent);
+    }
+
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      line-height: 1.0;
+    }
+    .page-header h1 em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+
+    .page-header-sub {
+      margin-top: 1.5rem;
+      font-size: 0.8125rem;
+      letter-spacing: 0.06em;
+      color: rgba(28, 26, 23, 0.45);
+      line-height: 1.8;
+    }
+
+    /* ── Filter bar ──────────────────────────────────────── */
+    .filter-bar {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.125rem;
+      border: 1px solid var(--color-rule);
+      color: rgba(28, 26, 23, 0.45);
+      background: transparent;
+      transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out),
+                  background 200ms var(--ease-out);
+    }
+    .filter-btn:hover {
+      border-color: rgba(28, 26, 23, 0.3);
+      color: var(--color-text);
+    }
+    .filter-btn.active {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      background: rgba(184, 149, 90, 0.06);
+    }
+
+    /* ── Diary content ───────────────────────────────────── */
+    .diary-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+
+    /* ── Entry grid ──────────────────────────────────────── */
+    .entries-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    /* ── Entry card ──────────────────────────────────────── */
+    .entry-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-rule);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.7s var(--ease-out) forwards;
+      transition: box-shadow 0.3s var(--ease-out);
+    }
+    .entry-card:hover {
+      box-shadow: 0 8px 40px rgba(28, 26, 23, 0.08);
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Image slot */
+    .entry-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: rgba(28, 26, 23, 0.04);
+      position: relative;
+    }
+    .entry-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out);
+    }
+    .entry-card:hover .entry-image img {
+      transform: scale(1.04);
+    }
+    .entry-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(28, 26, 23, 0.03);
+    }
+    .entry-image-placeholder svg {
+      width: 32px;
+      height: 32px;
+      color: rgba(28, 26, 23, 0.12);
+    }
+
+    /* Card body */
+    .entry-body {
+      padding: 1.25rem 1.375rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .entry-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+
+    .entry-category {
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .entry-date {
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+      color: rgba(28, 26, 23, 0.3);
+    }
+
+    .entry-title {
+      font-family: var(--font-heading);
+      font-size: 1.3125rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      color: var(--color-text);
+    }
+
+    .entry-excerpt {
+      font-size: 0.8125rem;
+      line-height: 1.65;
+      color: rgba(28, 26, 23, 0.55);
+      flex: 1;
+    }
+
+    .entry-footer {
+      display: flex;
+      align-items: center;
+      margin-top: 0.875rem;
+      padding-top: 0.875rem;
+      border-top: 1px solid var(--color-rule);
+    }
+
+    .entry-read-more {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(28, 26, 23, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 150ms;
+    }
+    .entry-card:hover .entry-read-more {
+      color: var(--color-accent);
+    }
+    .entry-read-more svg {
+      width: 12px;
+      height: 12px;
+      transition: transform 250ms var(--ease-out);
+    }
+    .entry-card:hover .entry-read-more svg {
+      transform: translateX(3px);
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    .footer {
+      background: var(--color-bg-dark);
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(245, 240, 232, 0.06);
+    }
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-logo {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 400;
+      color: rgba(245, 240, 232, 0.5);
+      letter-spacing: 0.04em;
+    }
+    .footer-logo span { color: var(--color-accent); }
+    .footer-info {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: rgba(245, 240, 232, 0.25);
+      text-align: right;
+    }
+
+    /* ── Animations ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .entries-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .entries-grid { grid-template-columns: 1fr; }
+      .page-header { padding: 3rem 1.25rem 2.5rem; }
+      .filter-bar { padding: 1.5rem 1.25rem 0; }
+      .diary-content { padding: 2rem 1.25rem 4rem; }
+      .nav { padding: 0 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ═══════════════════════════════════════════════ -->
+  <nav class="nav" aria-label="Navigáció">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-back" aria-label="Vissza a főoldalra">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Főoldal
+      </a>
+      <a href="../index.html" class="nav-logo">
+        <img src="../assets/images/logo.png" alt="Carol Gasztroműhely">
+      </a>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HEADER ════════════════════════════════════════ -->
+  <header class="page-header">
+    <div class="page-header-label">Carol Gasztroműhely</div>
+    <h1>Carol <em>Naplója</em></h1>
+    <p class="page-header-sub">
+      Receptek, műhelytitkok és debreceni gasztronómiai történetek
+    </p>
+  </header>
+
+  <!-- ══ FILTER BAR ════════════════════════════════════════ -->
+  <div class="filter-bar" role="group" aria-label="Szűrés kategória szerint">
+    <button class="filter-btn active" data-filter="all">Összes</button>
+    <button class="filter-btn" data-filter="receptek">Receptek</button>
+    <button class="filter-btn" data-filter="muhely-titkai">Műhely Titkai</button>
+    <button class="filter-btn" data-filter="debrecen">Debrecen</button>
+  </div>
+
+  <!-- ══ DIARY CONTENT ══════════════════════════════════════ -->
+  <main class="diary-content" id="diary-content">
+    <div class="entries-grid" id="entries-grid">
+
+      <!-- Entry 1 -->
+      <article class="entry-card" data-category="receptek" style="animation-delay: 0ms;">
+        <div class="entry-image">
+          <img src="../assets/images/retes.png" alt="Nagymama rétes-titka">
+        </div>
+        <div class="entry-body">
+          <div class="entry-meta">
+            <span class="entry-category">Receptek</span>
+            <time class="entry-date" datetime="2026-03-18">2026. március 18.</time>
+          </div>
+          <h2 class="entry-title">Nagymama rétes-titka — a tökéletes nyújtás módszere</h2>
+          <p class="entry-excerpt">
+            Évtizedek óta őrzöm ezt a receptet. A réteslapot nem hengerrel, hanem kézzel kell nyújtani — és pontosan ez adja azt az áttetsző finomságot, amit semmilyen bolti tészta nem tud visszaadni.
+          </p>
+          <div class="entry-footer">
+            <span class="entry-read-more">
+              Tovább olvasom
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Entry 2 -->
+      <article class="entry-card" data-category="muhely-titkai" style="animation-delay: 80ms;">
+        <div class="entry-image">
+          <img src="../assets/images/socialcooking.png" alt="Miért főzök mással?">
+        </div>
+        <div class="entry-body">
+          <div class="entry-meta">
+            <span class="entry-category">Műhely Titkai</span>
+            <time class="entry-date" datetime="2026-02-27">2026. február 27.</time>
+          </div>
+          <h2 class="entry-title">Miért főzök mással? — A közös főzés pedagógiája</h2>
+          <p class="entry-excerpt">
+            Amikor először nyitottam meg a műhely ajtaját idegenek előtt, azt hittem, a főzést tanítom. Ma már tudom: az összefigyelést, az egymásra hangolódást és a türelmet tanítjuk együtt — a serpenyő csak eszköz.
+          </p>
+          <div class="entry-footer">
+            <span class="entry-read-more">
+              Tovább olvasom
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Entry 3 -->
+      <article class="entry-card" data-category="debrecen" style="animation-delay: 160ms;">
+        <div class="entry-image">
+          <img src="../assets/images/debrecen.png" alt="Böszörményi út 68.">
+        </div>
+        <div class="entry-body">
+          <div class="entry-meta">
+            <span class="entry-category">Debrecen</span>
+            <time class="entry-date" datetime="2026-02-10">2026. február 10.</time>
+          </div>
+          <h2 class="entry-title">Böszörményi út 68. — hol a város találkozik az ízekkel</h2>
+          <p class="entry-excerpt">
+            Debrecennek van egy sajátos gasztronómiai karaktere, amit nem mindenki ismer. A hajdúsági paprika, a mangalica, a tanyasi tyúk — ezek nem klisék, hanem a mi alapanyagaink. Séta a város piacán és pár gondolat arról, miért ragaszkodunk a helyihez.
+          </p>
+          <div class="entry-footer">
+            <span class="entry-read-more">
+              Tovább olvasom
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">Carol<span>.</span></div>
+      <div class="footer-info">
+        4032 Debrecen, Böszörményi út 68.<br>
+        Mindennap 09:30 – 18:30
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── Filter logic ────────────────────────────────────── */
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var cards      = document.querySelectorAll('.entry-card');
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var filter = this.getAttribute('data-filter');
+
+        filterBtns.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+
+        cards.forEach(function (card) {
+          var cat = card.getAttribute('data-category');
+          var show = filter === 'all' || cat === filter;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    });
+  })();
+  </script>
+
+</body>
+</html>

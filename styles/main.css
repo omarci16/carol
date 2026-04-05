@@ -52,23 +52,25 @@ body {
   display: flex;
   align-items: center;
   padding: 0 var(--space-md);
-  /* Desktop: semi-transparent on hero, opaque on scroll */
-  background: rgba(245, 240, 232, 0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* Desktop: transparent on hero, opaque on scroll */
+  background: transparent;
+  color: white;
   box-shadow: none;
   transition: background var(--duration-slow) var(--ease-out),
-              box-shadow var(--duration-slow) var(--ease-out);
+              box-shadow var(--duration-slow) var(--ease-out),
+              color var(--duration-slow) var(--ease-out);
 }
-/* On scroll or mobile: full opaque nav */
+/* On scroll: full opaque nav */
 .nav.scrolled {
   background: rgba(245, 240, 232, 0.96);
+  color: var(--color-text);
   box-shadow: 0 1px 0 var(--color-rule);
 }
-/* Mobile: always opaque */
+/* Mobile: opaque */
 @media (max-width: 768px) {
   .nav {
     background: rgba(245, 240, 232, 0.97);
+    color: var(--color-text);
     box-shadow: 0 1px 0 var(--color-rule);
   }
 }
@@ -108,6 +110,10 @@ body {
   position: relative;
   transition: color var(--duration-fast);
   white-space: nowrap;
+  color: white;
+}
+.nav.scrolled .nav-links a {
+  color: var(--color-text);
 }
 .nav-links a::after {
   content: '';
@@ -133,9 +139,12 @@ body {
 .nav-toggle span {
   display: block;
   height: 1px;
-  background: var(--color-text);
+  background: white;
   transition: transform var(--duration-base) var(--ease-out),
               opacity var(--duration-fast);
+}
+.nav.scrolled .nav-toggle span {
+  background: var(--color-text);
 }
 
 /* ── Hero ─────────────────────────────────────────────────── */
@@ -147,7 +156,7 @@ body {
   padding: calc(var(--nav-height) + 3rem) var(--space-md) 4rem;
   position: relative;
   overflow: hidden;
-  background-image: linear-gradient(135deg, rgba(28, 26, 23, 0.65) 0%, rgba(28, 26, 23, 0.45) 100%), url('assets/images/hero.jpg');
+  background-image: linear-gradient(135deg, rgba(28, 26, 23, 0.73) 0%, rgba(28, 26, 23, 0.53) 100%), url('../assets/images/hero.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -446,7 +455,15 @@ body {
   display: flex;
   flex-direction: column;
   transition: box-shadow var(--duration-base) var(--ease-out);
+  perspective: 1000px;
 }
+.kurzus-card.reveal {
+  opacity: 0;
+  animation: courseCardEnter 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.kurzus-card.reveal.reveal-delay-1 { animation-delay: 0.15s; }
+.kurzus-card.reveal.reveal-delay-2 { animation-delay: 0.3s; }
+.kurzus-card.reveal.reveal-delay-3 { animation-delay: 0.45s; }
 .kurzus-card:hover {
   box-shadow: 0 12px 48px rgba(28, 26, 23, 0.1);
   z-index: 1;
@@ -466,7 +483,11 @@ body {
   object-fit: cover;
   display: block;
   transition: transform 0.6s var(--ease-out);
+  animation: courseImageReveal 1.4s ease-out both;
 }
+.kurzus-card.reveal.reveal-delay-1 .kurzus-image img { animation-delay: 0.25s; }
+.kurzus-card.reveal.reveal-delay-2 .kurzus-image img { animation-delay: 0.4s; }
+.kurzus-card.reveal.reveal-delay-3 .kurzus-image img { animation-delay: 0.55s; }
 .kurzus-card:hover .kurzus-image img { transform: scale(1.05); }
 
 /* Placeholder */
@@ -493,7 +514,11 @@ body {
   flex-direction: column;
   gap: 0.75rem;
   flex: 1;
+  animation: fadeUp 1.2s ease-out 0.4s both;
 }
+.kurzus-card.reveal.reveal-delay-1 .kurzus-body { animation-delay: 0.55s; }
+.kurzus-card.reveal.reveal-delay-2 .kurzus-body { animation-delay: 0.7s; }
+.kurzus-card.reveal.reveal-delay-3 .kurzus-body { animation-delay: 0.85s; }
 
 .kurzus-meta {
   display: flex;
@@ -1015,6 +1040,40 @@ body {
 @keyframes scrollDown {
   0%   { transform: translateY(-50%); }
   100% { transform: translateY(0); }
+}
+
+@keyframes courseCardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(48px) scale(0.92) rotateX(8deg);
+    filter: blur(4px);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(24px) scale(0.96) rotateX(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes courseImageReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) translateY(16px);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 0.8;
+    transform: scale(0.96) translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
